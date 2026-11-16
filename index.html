@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Elquizst.com — Radio en vivo</title>
+<meta name="description" content="Elquizst.com — escucha la emisora en vivo, mira la programación y pide tu canción.">
+<meta name="theme-color" content="#050824">
+<meta property="og:title" content="Elquizst.com — Radio en vivo">
+<meta property="og:description" content="La señal que no se apaga. Escucha en vivo y pide tu canción.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050824'/%3E%3Cpath d='M14 24h36a4 4 0 0 1 4 4v20a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V28a4 4 0 0 1 4-4z' fill='none' stroke='%232F7BFF' stroke-width='3'/%3E%3Cpath d='M20 24l24-12' stroke='%2345E0FF' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='38' r='6' fill='none' stroke='%2345E0FF' stroke-width='3'/%3E%3Cpath d='M38 34h8M38 42h8' stroke='%2345E0FF' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Audiowide&family=Chakra+Petch:wght@400;500;600;700&family=Monoton&family=VT323&display=swap">
+<style>
+/* =========================================================
+   COLORES Y MEDIDAS (cámbialos aquí para todo el sitio)
+   ========================================================= */
+:root{
+  --noche:#050824;
+  --noche-2:#02051A;
+  --panel:#0B1240;
+  --linea:#1E2A78;
+  --azul:#2F7BFF;
+  --cian:#45E0FF;
+  --hielo:#DCEBFF;
+  --texto-suave:#A9BEE8;
+  --texto-tenue:#8FA6D9;
+  --rojo:#FF4D6D;
+  --display:'Monoton','Audiowide',system-ui,sans-serif;
+  --titulos:'Audiowide',system-ui,sans-serif;
+  --cuerpo:'Chakra Petch',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --lcd:'VT323',ui-monospace,'Courier New',monospace;
+  --ancho:1200px;
+  --barra-alto:0px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--noche);color:var(--hielo);
+  font-family:var(--cuerpo);font-size:16px;line-height:1.5;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  padding-bottom:var(--barra-alto);
+}
+img,svg{display:block;max-width:100%}
+a{color:#7FD8FF}
+a:hover{color:#fff}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--cian);outline-offset:3px}
+.contenedor{width:100%;max-width:var(--ancho);margin:0 auto;padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+.solo-lectores{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.saltar{position:absolute;left:12px;top:-60px;z-index:100;padding:12px 18px;background:var(--azul);color:#fff;border-radius:4px;text-decoration:none}
+.saltar:focus{top:12px}
+
+/* ---------- Encabezado ---------- */
+.encabezado{
+  position:sticky;top:0;z-index:50;
+  background:rgba(5,8,36,.86);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--linea);
+  padding-top:env(safe-area-inset-top);
+}
+.encabezado .contenedor{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:68px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-family:var(--titulos);font-size:20px;letter-spacing:1px;white-space:nowrap}
+.logo span{color:var(--cian)}
+.logo svg{width:34px;height:34px;flex:none}
+.menu{display:flex;align-items:center;gap:28px}
+.menu a{color:var(--hielo);text-decoration:none;font-weight:600;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;padding:10px 0;position:relative}
+.menu a::after{content:"";position:absolute;left:0;right:0;bottom:4px;height:2px;background:var(--cian);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.menu a:hover::after{transform:scaleX(1)}
+.boton-menu{display:none;width:48px;height:48px;border:2px solid var(--linea);border-radius:8px;background:transparent;align-items:center;justify-content:center}
+.boton-menu span,.boton-menu span::before,.boton-menu span::after{display:block;width:22px;height:2px;background:#fff;position:relative;transition:transform .25s,background .25s}
+.boton-menu span::before,.boton-menu span::after{content:"";position:absolute;left:0}
+.boton-menu span::before{top:-7px}.boton-menu span::after{top:7px}
+.menu-abierto .boton-menu span{background:transparent}
+.menu-abierto .boton-menu span::before{transform:translateY(7px) rotate(45deg)}
+.menu-abierto .boton-menu span::after{transform:translateY(-7px) rotate(-45deg)}
+
+.pildora-vivo{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 18px;border:2px solid var(--azul);border-radius:999px;background:transparent;color:#fff;font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap}
+.punto{width:10px;height:10px;border-radius:50%;background:var(--rojo);box-shadow:0 0 10px var(--rojo);animation:parpadeo 1.2s steps(2,start) infinite;flex:none}
+@keyframes parpadeo{to{visibility:hidden}}
+
+/* Textos que cambian según si suena o no */
+.si-suena{display:none}
+.sonando .si-suena{display:inline}
+.sonando .si-pausa{display:none}
+
+/* ---------- Portada ---------- */
+.portada{
+  position:relative;overflow:hidden;isolation:isolate;
+  min-height:calc(100vh - 68px);min-height:calc(100svh - 68px);
+  display:flex;align-items:center;
+  background:linear-gradient(180deg,#050824 0%,#081046 45%,#101C80 64%,#050824 64.3%);
+}
+.estrellas{position:absolute;inset:0 0 40% 0;z-index:-3;opacity:.8;
+  background-image:
+   radial-gradient(1.5px 1.5px at 12% 18%,#fff 50%,transparent 51%),
+   radial-gradient(1px 1px at 28% 8%,#CFE6FF 50%,transparent 51%),
+   radial-gradient(1.5px 1.5px at 44% 26%,#fff 50%,transparent 51%),
+   radial-gradient(1px 1px at 63% 12%,#CFE6FF 50%,transparent 51%),
+   radial-gradient(2px 2px at 78% 22%,#fff 50%,transparent 51%),
+   radial-gradient(1px 1px at 90% 6%,#CFE6FF 50%,transparent 51%),
+   radial-gradient(1px 1px at 6% 40%,#CFE6FF 50%,transparent 51%),
+   radial-gradient(1.5px 1.5px at 94% 38%,#fff 50%,transparent 51%);
+  animation:titilar 4s ease-in-out infinite alternate}
+@keyframes titilar{from{opacity:.45}to{opacity:.95}}
+.sol{
+  position:absolute;z-index:-2;left:50%;top:64%;
+  width:clamp(240px,34vw,440px);aspect-ratio:2/1;opacity:.85;transform:translate(-50%,-100%);
+  border-radius:999px 999px 0 0;
+  background:linear-gradient(180deg,#45E0FF 0%,#2F7BFF 55%,#1B2FB8 100%);
+  -webkit-mask-image:repeating-linear-gradient(180deg,#000 0 16px,transparent 16px 22px);
+          mask-image:repeating-linear-gradient(180deg,#000 0 16px,transparent 16px 22px);
+  filter:drop-shadow(0 0 40px rgba(69,224,255,.45));
+  animation:sol 6s ease-in-out infinite alternate;
+}
+@keyframes sol{from{filter:drop-shadow(0 0 24px rgba(69,224,255,.35))}to{filter:drop-shadow(0 0 60px rgba(69,224,255,.6))}}
+.horizonte{position:absolute;z-index:-1;left:0;right:0;top:64%;bottom:0;overflow:hidden;perspective:300px;perspective-origin:50% 0;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 30%);mask-image:linear-gradient(180deg,transparent 0,#000 30%)}
+.horizonte::after{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--cian);box-shadow:0 0 18px 2px var(--cian)}
+.piso{position:absolute;left:-100%;width:300%;bottom:0;height:700px;transform-origin:50% 100%;
+  background-image:linear-gradient(rgba(69,224,255,.65) 2px,transparent 2px),linear-gradient(90deg,rgba(69,224,255,.65) 2px,transparent 2px);
+  background-size:60px 60px;background-position:50% 0;will-change:transform;
+  transform:rotateX(70deg);animation:avanzar 1.4s linear infinite}
+@keyframes avanzar{from{transform:rotateX(70deg) translateY(0)}to{transform:rotateX(70deg) translateY(60px)}}
+.lineas-tv{position:absolute;inset:0;z-index:5;pointer-events:none;background:repeating-linear-gradient(180deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px)}
+
+.portada .contenedor{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:40px;padding-top:56px;padding-bottom:72px}
+.portada-texto{flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:18px}
+.etiqueta-lcd{margin:0;font-family:var(--lcd);font-size:clamp(20px,2.4vw,26px);letter-spacing:3px;color:var(--cian)}
+.cursor::after{content:"█";margin-left:4px;animation:parpadeo 1s steps(2,start) infinite}
+.cromado{
+  margin:0;font-family:var(--display);font-weight:400;line-height:1;letter-spacing:2px;
+  font-size:clamp(52px,11vw,128px);
+  background:linear-gradient(180deg,#fff 0%,#CFE6FF 40%,#2F7BFF 50%,#0A1A66 54%,#45E0FF 78%,#fff 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 18px rgba(47,123,255,.55));
+  overflow-wrap:anywhere;
+}
+.lema,.intro,.etiqueta-lcd{text-shadow:0 2px 10px #050824,0 0 2px #050824}
+.lema{margin:0;font-family:var(--titulos);font-size:clamp(19px,2.6vw,28px);color:#fff;letter-spacing:1px}
+.intro{margin:0;max-width:520px;font-size:18px;line-height:1.6;color:var(--texto-suave)}
+.acciones{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px}
+.boton{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:52px;padding:0 26px;border-radius:4px;font-weight:700;font-size:15px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:transform .15s,box-shadow .15s}
+.boton svg{width:18px;height:18px;flex:none}
+.boton-principal{border:0;background:var(--azul);color:#fff;box-shadow:4px 4px 0 var(--cian)}
+.boton-principal:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--cian);color:#fff}
+.boton-principal:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--cian)}
+.boton-borde{border:2px solid var(--cian);background:transparent;color:var(--cian)}
+.boton-borde:hover{background:rgba(69,224,255,.1);color:#fff}
+
+/* ---------- Reproductor ---------- */
+.reproductor{
+  flex:1 1 360px;max-width:460px;min-width:0;padding:22px;
+  border:2px solid var(--azul);border-radius:12px;background:rgba(8,13,52,.92);
+  box-shadow:0 0 0 6px var(--noche),0 0 48px rgba(47,123,255,.45);
+}
+.rep-arriba{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.en-vivo{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:2px;color:#fff}
+.frecuencia{font-family:var(--lcd);font-size:24px;color:var(--cian)}
+.pantalla{padding:16px 16px 12px;border-radius:6px;background:var(--noche-2);border:1px solid var(--linea);box-shadow:inset 0 0 24px rgba(69,224,255,.12);overflow:hidden}
+.pantalla p{margin:0;font-family:var(--lcd)}
+.pantalla .mini{font-size:18px;letter-spacing:2px;color:#6F86C9}
+.desliza{overflow:hidden;white-space:nowrap}
+.desliza span{display:inline-block;font-size:30px;line-height:1.15;color:var(--cian)}
+.sonando .desliza span{animation:marquesina 12s linear infinite}
+@keyframes marquesina{0%,15%{transform:translateX(0)}85%,100%{transform:translateX(min(0px,calc(-100% + 300px)))}}
+.pantalla .artista{font-size:22px;color:var(--texto-suave)}
+.estado{min-height:22px;font-size:18px!important;color:#6F86C9}
+.ecualizador{display:flex;align-items:flex-end;gap:4px;height:64px;margin-top:12px}
+.ecualizador i{flex:1 1 0;height:100%;border-radius:2px 2px 0 0;background:linear-gradient(180deg,var(--cian),var(--azul));transform-origin:50% 100%;transform:scaleY(.12);transition:transform .4s}
+.sonando .ecualizador i{animation:eq .9s ease-in-out infinite alternate}
+@keyframes eq{0%{transform:scaleY(.2)}50%{transform:scaleY(1)}100%{transform:scaleY(.4)}}
+.controles{display:flex;align-items:center;gap:16px;margin-top:18px}
+.boton-play{flex:none;display:flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:50%;border:2px solid var(--cian);background:var(--azul);color:#fff;transition:transform .15s}
+.boton-play:hover{transform:scale(1.06)}
+.boton-play svg{width:26px;height:26px}
+.cargando .boton-play svg{opacity:.3}
+.cargando .boton-play{background:conic-gradient(var(--cian) 0 25%,var(--azul) 25%);animation:girar 1s linear infinite}
+@keyframes girar{to{transform:rotate(360deg)}}
+.volumen{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:4px}
+.volumen label{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--texto-tenue)}
+.volumen input{width:100%;accent-color:var(--cian);min-height:28px}
+.al-aire{margin:14px 0 0;font-size:14px;color:var(--texto-tenue)}
+.al-aire strong{color:#fff}
+
+/* ---------- Cinta ---------- */
+.cinta{overflow:hidden;border-block:2px solid var(--azul);background:#0A1150}
+.cinta-pista{display:flex;width:max-content;animation:cinta 30s linear infinite}
+.cinta-pista span{padding:14px 24px 14px 0;font-family:var(--titulos);font-size:17px;letter-spacing:3px;color:#CFE6FF;white-space:nowrap}
+
+/* ---------- Secciones ---------- */
+@keyframes cinta{to{transform:translateX(-50%)}}
+.seccion{padding:88px 0 64px}
+.cabecera-seccion{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:36px}
+.cabecera-seccion h2,.caja h2{margin:0;font-family:var(--titulos);font-weight:400;font-size:clamp(30px,4.4vw,48px);color:#fff;line-height:1.1}
+.ver-mas{font-weight:700;letter-spacing:1.5px;text-transform:uppercase;font-size:14px}
+
+.programas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:22px}
+.programa{position:relative;padding:24px;border-radius:8px;border:1px solid var(--linea);background:var(--panel);transition:transform .25s,box-shadow .25s,border-color .25s}
+.programa:hover{transform:translateY(-4px);border-color:var(--azul);box-shadow:0 10px 30px rgba(47,123,255,.25)}
+.programa.ahora{border:2px solid var(--azul);box-shadow:6px 6px 0 var(--cian)}
+.programa .hora{margin:0;font-family:var(--lcd);font-size:32px;color:var(--cian)}
+.programa h3{margin:10px 0 6px;font-family:var(--titulos);font-weight:400;font-size:20px;color:#fff}
+.programa p{margin:0;color:var(--texto-suave);font-size:15px}
+.marca-aire{position:absolute;top:-13px;right:16px;padding:3px 10px;border-radius:3px;background:var(--rojo);color:#fff;font-size:12px;font-weight:700;letter-spacing:2px;animation:latido 1.6s ease-in-out infinite}
+@keyframes latido{50%{box-shadow:0 0 0 6px rgba(255,77,109,.25)}}
+
+.dos-columnas{display:flex;flex-wrap:wrap;gap:28px;padding-bottom:88px}
+.caja{flex:1 1 400px;min-width:0;padding:30px;border-radius:12px}
+.caja-oscura{border:1px solid var(--linea);background:var(--noche-2)}
+.caja-azul{border:2px solid var(--azul);background:var(--panel)}
+.caja h2{font-size:clamp(26px,3.4vw,32px);margin-bottom:22px}
+.lista-canciones{margin:0;padding:0;list-style:none}
+.lista-canciones li{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px dashed var(--linea)}
+.lista-canciones li:last-child{border-bottom:0}
+.lista-canciones .num{font-family:var(--lcd);font-size:28px;color:var(--azul);width:32px;flex:none}
+.lista-canciones .info{flex:1 1 auto;min-width:0}
+.lista-canciones strong{display:block;color:#fff;font-size:17px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lista-canciones .info span{color:var(--texto-tenue);font-size:14px}
+.lista-canciones .cuando{font-family:var(--lcd);font-size:22px;color:var(--texto-tenue);flex:none}
+
+.formulario{display:flex;flex-direction:column;gap:14px}
+.formulario p{margin:0;color:var(--texto-suave)}
+.formulario label{font-size:13px;font-weight:700;letter-spacing:1.5px;color:#CFE6FF;margin-top:4px}
+.formulario input,.formulario textarea{width:100%;min-height:50px;padding:12px 14px;border-radius:6px;border:1px solid #2A3A99;background:var(--noche-2);color:#fff;font-size:16px;transition:border-color .2s,box-shadow .2s}
+.formulario textarea{min-height:96px;resize:vertical}
+.formulario input:focus,.formulario textarea:focus{outline:none;border-color:var(--cian);box-shadow:0 0 0 3px rgba(69,224,255,.25)}
+.formulario ::placeholder{color:#6F86C9}
+.fila-botones{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:6px}
+.nota{font-size:14px;color:var(--texto-tenue)}
+
+/* ---------- Pie ---------- */
+.pie{border-top:2px solid var(--azul);background:var(--noche-2)}
+.pie .contenedor{display:flex;flex-wrap:wrap;justify-content:space-between;gap:32px;padding-top:48px;padding-bottom:40px}
+.pie-col{display:flex;flex-direction:column;gap:8px;flex:1 1 200px}
+.pie-col .titulo{font-size:13px;font-weight:700;letter-spacing:2px;color:#CFE6FF}
+.pie-col span,.pie-col a{font-size:15px;color:var(--texto-suave)}
+.pie-col a{text-decoration:none}
+.pie-col a:hover{color:#fff;text-decoration:underline}
+.derechos{border-top:1px solid var(--linea)}
+.derechos p{margin:0;padding:18px 0;font-family:var(--lcd);font-size:20px;color:#6F86C9}
+
+/* ---------- Mini reproductor fijo (aparece al bajar) ---------- */
+.mini-rep{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;
+  transform:translateY(110%);transition:transform .35s ease;
+  background:rgba(5,8,36,.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  border-top:2px solid var(--azul);
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.mini-rep.visible{transform:translateY(0)}
+.mini-rep .contenedor{display:flex;align-items:center;gap:14px;min-height:68px}
+.mini-rep .boton-play{width:48px;height:48px}
+.mini-rep .boton-play svg{width:20px;height:20px}
+.mini-rep .texto{flex:1 1 auto;min-width:0;line-height:1.25}
+.mini-rep .texto strong{display:block;color:#fff;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mini-rep .texto span{font-size:13px;color:var(--texto-tenue)}
+.mini-eq{display:flex;align-items:flex-end;gap:3px;height:28px;width:40px;flex:none}
+.mini-eq i{flex:1;height:100%;background:var(--cian);transform-origin:50% 100%;transform:scaleY(.15)}
+.sonando .mini-eq i{animation:eq .8s ease-in-out infinite alternate}
+
+/* ---------- Aviso ---------- */
+.aviso{position:fixed;left:50%;width:max-content;bottom:calc(84px + env(safe-area-inset-bottom));z-index:80;transform:translate(-50%,20px);opacity:0;pointer-events:none;
+  max-width:min(92vw,460px);padding:14px 18px;border-radius:8px;background:#0B1240;border:2px solid var(--cian);color:#fff;font-size:15px;text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.5);transition:opacity .3s,transform .3s}
+.aviso.visible{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- Animación al aparecer ---------- */
+.js .aparece{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.js .aparece.adentro{opacity:1;transform:none}
+.js .aparece:nth-child(2){transition-delay:.08s}
+.js .aparece:nth-child(3){transition-delay:.16s}
+.js .aparece:nth-child(4){transition-delay:.24s}
+.entrada{animation:entrada .9s cubic-bezier(.2,.8,.2,1) both}
+.entrada-2{animation-delay:.15s}.entrada-3{animation-delay:.3s}.entrada-4{animation-delay:.45s}.entrada-5{animation-delay:.6s}
+@keyframes entrada{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* ---------- Celulares y tablets ---------- */
+@media (max-width:860px){
+  .boton-menu{display:inline-flex}
+  .pildora-vivo{display:none}
+  .menu{
+    position:fixed;left:0;right:0;top:calc(68px + env(safe-area-inset-top));
+    flex-direction:column;align-items:stretch;gap:0;
+    padding:8px 20px 24px;background:rgba(5,8,36,.98);border-bottom:2px solid var(--azul);
+    transform:translateY(-12px);opacity:0;visibility:hidden;transition:opacity .25s,transform .25s,visibility .25s;
+  }
+  .menu a{font-size:18px;padding:16px 4px;border-bottom:1px solid var(--linea)}
+  .menu a::after{display:none}
+  .menu-abierto .menu{transform:none;opacity:1;visibility:visible}
+  .portada{background:linear-gradient(180deg,#050824 0%,#081046 52%,#101C80 70%,#050824 70.3%)}
+  .sol,.horizonte{top:70%}
+  .portada .contenedor{padding-top:40px;padding-bottom:48px;gap:32px}
+  .reproductor{max-width:none}
+}
+@media (max-width:480px){
+  .logo{font-size:17px}
+  .logo svg{width:30px;height:30px}
+  .boton{width:100%}
+  .caja{padding:22px}
+  .reproductor{padding:18px}
+  .desliza span{font-size:26px}
+  .seccion{padding:64px 0 48px}
+  .programa .hora{font-size:26px}
+}
+
+/* Respeta a quienes prefieren menos movimiento */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .js .aparece{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="encabezado" id="encabezado">
+  <div class="contenedor">
+    <a class="logo" href="#inicio" aria-label="Elquizst.com, inicio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#2F7BFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8l10-5" stroke="#45E0FF"/><circle cx="9" cy="14" r="3" stroke="#45E0FF"/><path d="M15 12h3M15 15h3" stroke="#45E0FF"/></svg>
+      ELQUIZST<span>.COM</span>
+    </a>
+    <nav class="menu" id="menu" aria-label="Principal">
+      <a href="#en-vivo">En vivo</a>
+      <a href="#programacion">Programación</a>
+      <a href="#pedidos">Pide tu canción</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <button class="pildora-vivo" type="button" data-accion="play" aria-pressed="false">
+      <span class="punto" aria-hidden="true"></span>
+      <span class="si-pausa">Escuchar</span><span class="si-suena">Sonando</span>
+    </button>
+    <button class="boton-menu" id="boton-menu" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><span></span></button>
+  </div>
+</header>
+
+<main id="contenido">
+  <!-- PORTADA -->
+  <section class="portada" id="inicio">
+    <div class="estrellas" aria-hidden="true"></div>
+    <div class="sol" aria-hidden="true"></div>
+    <div class="horizonte" aria-hidden="true"><div class="piso"></div></div>
+    <div class="lineas-tv" aria-hidden="true"></div>
+
+    <div class="contenedor" id="en-vivo">
+      <div class="portada-texto">
+        <p class="etiqueta-lcd entrada"><span class="cursor">▶ TRANSMITIENDO 24/7 DESDE [CIUDAD]</span></p>
+        <h1 class="cromado entrada entrada-2">Elquizst</h1>
+        <p class="lema entrada entrada-3">La señal que no se apaga.</p>
+        <p class="intro entrada entrada-4">[Una o dos frases sobre la emisora: qué música pone, a quién le habla y qué la hace distinta.]</p>
+        <div class="acciones entrada entrada-5">
+          <button class="boton boton-principal" type="button" data-accion="play" aria-pressed="false">
+            <span class="si-pausa"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg></span>
+            <span class="si-suena"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></span>
+            <span class="si-pausa">Escuchar en vivo</span><span class="si-suena">Pausar</span>
+          </button>
+          <a class="boton boton-borde" href="#programacion">Ver programación</a>
+        </div>
+      </div>
+
+      <div class="reproductor entrada entrada-3" id="reproductor" role="region" aria-label="Reproductor de la emisora">
+        <div class="rep-arriba">
+          <span class="en-vivo"><span class="punto" aria-hidden="true"></span>EN VIVO</span>
+          <span class="frecuencia">[FRECUENCIA] FM</span>
+        </div>
+        <div class="pantalla">
+          <p class="mini">SONANDO AHORA</p>
+          <p class="desliza"><span id="cancion-actual">[Nombre de la canción]</span></p>
+          <p class="artista" id="artista-actual">[Artista]</p>
+          <div class="ecualizador" aria-hidden="true" id="ecualizador"></div>
+          <p class="estado" id="estado" aria-live="polite">LISTO PARA SONAR</p>
+        </div>
+        <div class="controles">
+          <button class="boton-play" type="button" data-accion="play" aria-pressed="false" aria-label="Escuchar la emisora en vivo">
+            <span class="si-pausa"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg></span>
+            <span class="si-suena"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></span>
+          </button>
+          <div class="volumen">
+            <label for="volumen">VOLUMEN · <span id="volumen-valor">80</span>%</label>
+            <input id="volumen" type="range" min="0" max="100" value="80">
+          </div>
+        </div>
+        <p class="al-aire">Al aire: <strong id="programa-actual">[Programa actual]</strong> <span id="locutor-actual"></span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CINTA -->
+  <div class="cinta" aria-hidden="true">
+    <div class="cinta-pista">
+      <span>EN VIVO ★ ELQUIZST.COM ★ LA SEÑAL QUE NO SE APAGA ★ PIDE TU CANCIÓN ★ [FRECUENCIA] FM ★</span>
+      <span>EN VIVO ★ ELQUIZST.COM ★ LA SEÑAL QUE NO SE APAGA ★ PIDE TU CANCIÓN ★ [FRECUENCIA] FM ★</span>
+      <span>EN VIVO ★ ELQUIZST.COM ★ LA SEÑAL QUE NO SE APAGA ★ PIDE TU CANCIÓN ★ [FRECUENCIA] FM ★</span>
+      <span>EN VIVO ★ ELQUIZST.COM ★ LA SEÑAL QUE NO SE APAGA ★ PIDE TU CANCIÓN ★ [FRECUENCIA] FM ★</span>
+    </div>
+  </div>
+
+  <!-- PROGRAMACIÓN -->
+  <section class="seccion" id="programacion">
+    <div class="contenedor">
+      <div class="cabecera-seccion aparece">
+        <div>
+          <p class="etiqueta-lcd">// HOY EN LA RADIO</p>
+          <h2>Programación</h2>
+        </div>
+        <a class="ver-mas" href="#programacion">Ver semana completa →</a>
+      </div>
+      <div class="programas" id="programas">
+        <!-- Se llena solo con la lista PROGRAMAS del final del archivo -->
+      </div>
+    </div>
+  </section>
+
+  <!-- SONÓ HACE POCO + PEDIDOS -->
+  <section id="pedidos">
+    <div class="contenedor dos-columnas">
+      <div class="caja caja-oscura aparece">
+        <p class="etiqueta-lcd">// LADO A</p>
+        <h2>Sonó hace poco</h2>
+        <ol class="lista-canciones">
+          <li><span class="num">01</span><span class="info"><strong>[Canción]</strong><span>[Artista]</span></span><span class="cuando">[00:00]</span></li>
+          <li><span class="num">02</span><span class="info"><strong>[Canción]</strong><span>[Artista]</span></span><span class="cuando">[00:00]</span></li>
+          <li><span class="num">03</span><span class="info"><strong>[Canción]</strong><span>[Artista]</span></span><span class="cuando">[00:00]</span></li>
+          <li><span class="num">04</span><span class="info"><strong>[Canción]</strong><span>[Artista]</span></span><span class="cuando">[00:00]</span></li>
+          <li><span class="num">05</span><span class="info"><strong>[Canción]</strong><span>[Artista]</span></span><span class="cuando">[00:00]</span></li>
+        </ol>
+      </div>
+
+      <form class="caja caja-azul formulario aparece" id="formulario" novalidate>
+        <p class="etiqueta-lcd">// LADO B</p>
+        <h2 style="margin-bottom:0">Pide tu canción</h2>
+        <p>Escribe qué quieres escuchar y a quién se la dedicas. Te llevamos a WhatsApp con el mensaje listo.</p>
+        <label for="nombre">TU NOMBRE</label>
+        <input id="nombre" name="nombre" type="text" autocomplete="given-name" placeholder="Ej: Laura desde Medellín" required>
+        <label for="cancion">CANCIÓN Y ARTISTA</label>
+        <input id="cancion" name="cancion" type="text" placeholder="Ej: Canción — Artista" required>
+        <label for="dedicatoria">DEDICATORIA (OPCIONAL)</label>
+        <textarea id="dedicatoria" name="dedicatoria" rows="3" placeholder="Para…"></textarea>
+        <div class="fila-botones">
+          <button class="boton boton-principal" type="submit">Enviar pedido</button>
+          <span class="nota">Se abre WhatsApp</span>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="pie" id="contacto">
+  <div class="contenedor">
+    <div class="pie-col">
+      <span class="logo" style="font-size:24px">ELQUIZST<span>.COM</span></span>
+      <span>La señal que no se apaga.</span>
+    </div>
+    <div class="pie-col">
+      <span class="titulo">CONTACTO</span>
+      <a href="mailto:[correo@elquizst.com]">[correo@elquizst.com]</a>
+      <a href="#" id="enlace-whatsapp">WhatsApp</a>
+    </div>
+    <div class="pie-col">
+      <span class="titulo">SÍGUENOS</span>
+      <a href="#" target="_blank" rel="noopener">Instagram</a>
+      <a href="#" target="_blank" rel="noopener">Facebook</a>
+      <a href="#" target="_blank" rel="noopener">TikTok</a>
+    </div>
+  </div>
+  <div class="derechos"><div class="contenedor"><p>© <span id="anio">2026</span> ELQUIZST.COM · TODOS LOS DERECHOS RESERVADOS</p></div></div>
+</footer>
+
+<!-- Mini reproductor que aparece al bajar -->
+<div class="mini-rep" id="mini-rep" aria-hidden="true">
+  <div class="contenedor">
+    <button class="boton-play" type="button" data-accion="play" aria-pressed="false" aria-label="Escuchar la emisora en vivo" tabindex="-1">
+      <span class="si-pausa"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg></span>
+      <span class="si-suena"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></span>
+    </button>
+    <div class="texto"><strong>Elquizst.com · En vivo</strong><span id="mini-programa">[Programa actual]</span></div>
+    <div class="mini-eq" aria-hidden="true"><i></i><i style="animation-delay:-.3s"></i><i style="animation-delay:-.6s"></i><i style="animation-delay:-.15s"></i></div>
+  </div>
+</div>
+
+<div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+
+<script>
+/* =========================================================
+   ✏️ CONFIGURACIÓN — CAMBIA ESTO
+   ========================================================= */
+var CONFIG = {
+  // Dirección de tu transmisión en vivo (te la da tu proveedor de streaming:
+  // Zeno.fm, Radio.co, Shoutcast, Icecast, etc.). Ej: "https://stream.zeno.fm/abc123"
+  STREAM_URL: "",
+
+  // Tu WhatsApp con indicativo, sin + ni espacios. Ej: "573001234567"
+  WHATSAPP: "",
+
+  // Programación diaria (hora de 24 h). Las horas son de EJEMPLO: cámbialas por las reales.
+  PROGRAMAS: [
+    { inicio: "06:00", fin: "10:00", nombre: "[Programa de la mañana]", locutor: "[Locutor]", descripcion: "[Una línea sobre el programa.]" },
+    { inicio: "10:00", fin: "14:00", nombre: "[Programa del mediodía]", locutor: "[Locutor]", descripcion: "[Una línea sobre el programa.]" },
+    { inicio: "14:00", fin: "19:00", nombre: "[Programa de la tarde]",  locutor: "[Locutor]", descripcion: "[Una línea sobre el programa.]" },
+    { inicio: "19:00", fin: "24:00", nombre: "[Programa de la noche]",  locutor: "[Locutor]", descripcion: "[Una línea sobre el programa.]" }
+  ],
+  // Lo que se muestra cuando ningún programa está al aire
+  SIN_PROGRAMA: "Música continua"
+};
+
+/* =========================================================
+   De aquí para abajo no necesitas cambiar nada
+   ========================================================= */
+(function () {
+  "use strict";
+  var doc = document.documentElement;
+  doc.classList.add("js");
+  var $ = function (s, c) { return (c || document).querySelector(s); };
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+
+  /* ---------- Aviso ---------- */
+  var aviso = $("#aviso"), avisoTimer;
+  function avisar(texto) {
+    aviso.textContent = texto;
+    aviso.classList.add("visible");
+    clearTimeout(avisoTimer);
+    avisoTimer = setTimeout(function () { aviso.classList.remove("visible"); }, 4200);
+  }
+
+  /* ---------- Menú del celular ---------- */
+  var botonMenu = $("#boton-menu");
+  function cerrarMenu() {
+    document.body.classList.remove("menu-abierto");
+    botonMenu.setAttribute("aria-expanded", "false");
+    botonMenu.setAttribute("aria-label", "Abrir menú");
+  }
+  botonMenu.addEventListener("click", function () {
+    var abierto = document.body.classList.toggle("menu-abierto");
+    botonMenu.setAttribute("aria-expanded", String(abierto));
+    botonMenu.setAttribute("aria-label", abierto ? "Cerrar menú" : "Abrir menú");
+  });
+  $$("#menu a").forEach(function (a) { a.addEventListener("click", cerrarMenu); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") cerrarMenu(); });
+
+  /* ---------- Ecualizador ---------- */
+  var eq = $("#ecualizador");
+  var alturas = [38, 62, 80, 54, 92, 70, 44, 86, 100, 66, 50, 78, 96, 58, 40, 72, 88, 48];
+  alturas.forEach(function (h, i) {
+    var barra = document.createElement("i");
+    barra.style.animationDelay = (-(i * 137) % 900) + "ms";
+    barra.style.animationDuration = (700 + (h * 5)) + "ms";
+    eq.appendChild(barra);
+  });
+
+  /* ---------- Reproductor ---------- */
+  var audio = new Audio();
+  audio.preload = "none";
+  var estadoTxt = $("#estado");
+  var volumen = $("#volumen"), volumenValor = $("#volumen-valor");
+  var estado = "pausa"; // pausa | cargando | sonando
+
+  function pintar(nuevo, mensaje) {
+    estado = nuevo;
+    doc.classList.toggle("sonando", nuevo === "sonando" || nuevo === "demo");
+    doc.classList.toggle("cargando", nuevo === "cargando");
+    var activo = nuevo !== "pausa";
+    $$('[data-accion="play"]').forEach(function (b) {
+      b.setAttribute("aria-pressed", String(activo));
+      if (b.classList.contains("boton-play")) b.setAttribute("aria-label", activo ? "Pausar la emisora" : "Escuchar la emisora en vivo");
+    });
+    estadoTxt.textContent = mensaje || (nuevo === "sonando" ? "► EN EL AIRE" : nuevo === "cargando" ? "SINTONIZANDO…" : nuevo === "demo" ? "► MODO DEMO" : "LISTO PARA SONAR");
+    if ("mediaSession" in navigator) navigator.mediaSession.playbackState = nuevo === "sonando" ? "playing" : "paused";
+  }
+
+  function reproducir() {
+    if (!CONFIG.STREAM_URL) {
+      pintar("demo");
+      avisar("Modo demostración: falta poner la dirección de la transmisión (STREAM_URL) en el archivo.");
+      return;
+    }
+    pintar("cargando");
+    // Se pide la transmisión de nuevo para escuchar siempre lo que suena AHORA
+    audio.src = CONFIG.STREAM_URL + (CONFIG.STREAM_URL.indexOf("?") > -1 ? "&" : "?") + "t=" + Date.now();
+    audio.volume = volumen.value / 100;
+    var promesa = audio.play();
+    if (promesa && promesa.catch) promesa.catch(function (err) {
+      if (err && err.name === "AbortError") return;
+      pintar("pausa", "SIN SEÑAL");
+      avisar("No pudimos conectar con la emisora. Intenta de nuevo en un momento.");
+    });
+  }
+
+  function detener() {
+    audio.pause();
+    audio.removeAttribute("src"); // deja de descargar la transmisión (ahorra datos)
+    audio.load();
+    pintar("pausa");
+  }
+
+  function alternar() { if (estado === "pausa") reproducir(); else detener(); }
+
+  $$('[data-accion="play"]').forEach(function (b) { b.addEventListener("click", alternar); });
+  audio.addEventListener("playing", function () { pintar("sonando"); });
+  audio.addEventListener("waiting", function () { if (estado !== "pausa") pintar("cargando"); });
+  audio.addEventListener("error", function () {
+    if (estado === "pausa" || !audio.getAttribute("src")) return;
+    pintar("pausa", "SIN SEÑAL");
+    avisar("Se perdió la señal. Toca play para reconectar.");
+  });
+
+  volumen.addEventListener("input", function () {
+    volumenValor.textContent = volumen.value;
+    audio.volume = volumen.value / 100;
+  });
+
+  // Controles en la pantalla de bloqueo del celular
+  if ("mediaSession" in navigator && window.MediaMetadata) {
+    navigator.mediaSession.metadata = new MediaMetadata({ title: "En vivo", artist: "Elquizst.com", album: "La señal que no se apaga" });
+    try {
+      navigator.mediaSession.setActionHandler("play", reproducir);
+      navigator.mediaSession.setActionHandler("pause", detener);
+      navigator.mediaSession.setActionHandler("stop", detener);
+    } catch (e) {}
+  }
+
+  /* ---------- Programación (marca el programa al aire) ---------- */
+  function aMinutos(h) { var p = h.split(":"); return (+p[0]) * 60 + (+p[1] || 0); }
+  function formato(h) {
+    var m = aMinutos(h) % 1440, hh = Math.floor(m / 60), mm = m % 60;
+    var suf = hh < 12 ? "a.m." : "p.m.", h12 = hh % 12 === 0 ? 12 : hh % 12;
+    return h12 + ":" + (mm < 10 ? "0" : "") + mm + " " + suf;
+  }
+  function escapar(t) { var d = document.createElement("div"); d.textContent = t; return d.innerHTML; }
+
+  var contenedorProgramas = $("#programas");
+  function pintarProgramas() {
+    var ahora = new Date(), min = ahora.getHours() * 60 + ahora.getMinutes();
+    var actual = null;
+    contenedorProgramas.innerHTML = "";
+    CONFIG.PROGRAMAS.forEach(function (p) {
+      var ini = aMinutos(p.inicio), fin = aMinutos(p.fin);
+      var alAire = fin > ini ? (min >= ini && min < fin) : (min >= ini || min < fin);
+      if (alAire) actual = p;
+      var art = document.createElement("article");
+      art.className = "programa aparece" + (alAire ? " ahora" : "");
+      art.innerHTML =
+        (alAire ? '<span class="marca-aire">AL AIRE</span>' : "") +
+        '<p class="hora">' + escapar(formato(p.inicio)) + " – " + escapar(formato(p.fin)) + "</p>" +
+        "<h3>" + escapar(p.nombre) + "</h3>" +
+        "<p>Con " + escapar(p.locutor) + ". " + escapar(p.descripcion) + "</p>";
+      contenedorProgramas.appendChild(art);
+    });
+    var nombre = actual ? actual.nombre : CONFIG.SIN_PROGRAMA;
+    $("#programa-actual").textContent = nombre;
+    $("#locutor-actual").textContent = actual ? "con " + actual.locutor : "";
+    $("#mini-programa").textContent = nombre;
+    observar($$(".programa", contenedorProgramas));
+  }
+
+  /* ---------- Animación al aparecer ---------- */
+  var observador = "IntersectionObserver" in window ? new IntersectionObserver(function (entradas) {
+    entradas.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("adentro"); observador.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }) : null;
+  function observar(elementos) {
+    elementos.forEach(function (el) { if (observador) observador.observe(el); else el.classList.add("adentro"); });
+  }
+  observar($$(".aparece"));
+  pintarProgramas();
+  setInterval(pintarProgramas, 60 * 1000);
+
+  /* ---------- Mini reproductor al bajar ---------- */
+  var mini = $("#mini-rep"), rep = $("#reproductor");
+  function mostrarMini(visible) {
+    mini.classList.toggle("visible", visible);
+    mini.setAttribute("aria-hidden", String(!visible));
+    $(".boton-play", mini).tabIndex = visible ? 0 : -1;
+    document.body.style.setProperty("--barra-alto", visible ? (mini.offsetHeight + "px") : "0px");
+  }
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (e) { mostrarMini(!e[0].isIntersecting && e[0].boundingClientRect.top < 0); }).observe(rep);
+  }
+
+  /* ---------- Pedido por WhatsApp ---------- */
+  var urlWhatsapp = function (texto) { return "https://wa.me/" + CONFIG.WHATSAPP.replace(/\D/g, "") + (texto ? "?text=" + encodeURIComponent(texto) : ""); };
+  var enlaceWa = $("#enlace-whatsapp");
+  if (CONFIG.WHATSAPP) { enlaceWa.href = urlWhatsapp(""); enlaceWa.target = "_blank"; enlaceWa.rel = "noopener"; }
+  else enlaceWa.addEventListener("click", function (e) { e.preventDefault(); avisar("Falta poner el número de WhatsApp (WHATSAPP) en el archivo."); });
+
+  $("#formulario").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var nombre = $("#nombre").value.trim(), cancion = $("#cancion").value.trim(), dedic = $("#dedicatoria").value.trim();
+    if (!nombre) { avisar("Escribe tu nombre."); $("#nombre").focus(); return; }
+    if (!cancion) { avisar("Escribe la canción que quieres escuchar."); $("#cancion").focus(); return; }
+    if (!CONFIG.WHATSAPP) { avisar("Falta poner el número de WhatsApp (WHATSAPP) en el archivo."); return; }
+    var texto = "¡Hola Elquizst! Soy " + nombre + ".\nQuiero escuchar: " + cancion + (dedic ? "\nSe la dedico a: " + dedic : "");
+    window.open(urlWhatsapp(texto), "_blank", "noopener");
+    e.target.reset();
+    avisar("¡Listo! Envía el mensaje en WhatsApp y suena pronto.");
+  });
+
+  $("#anio").textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
