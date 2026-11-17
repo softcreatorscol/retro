@@ -279,6 +279,57 @@ button{cursor:pointer}
 .entrada-2{animation-delay:.15s}.entrada-3{animation-delay:.3s}.entrada-4{animation-delay:.45s}.entrada-5{animation-delay:.6s}
 @keyframes entrada{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 
+
+/* ---------- Rebobinando (blog retro) ---------- */
+.filtros{display:flex;flex-wrap:wrap;gap:10px;margin:-12px 0 28px}
+.chip{min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--linea);background:transparent;color:var(--texto-suave);font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;transition:border-color .2s,color .2s,background .2s}
+.chip:hover{border-color:var(--azul);color:#fff}
+.chip[aria-pressed="true"]{border-color:var(--cian);background:rgba(69,224,255,.12);color:#fff}
+.notas{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:24px}
+.historia{display:flex;flex-direction:column;border-radius:10px;border:1px solid var(--linea);background:var(--panel);overflow:hidden;cursor:pointer;text-align:left;padding:0;color:inherit;transition:transform .25s,box-shadow .25s,border-color .25s}
+.historia:hover{transform:translateY(-4px);border-color:var(--azul);box-shadow:0 12px 32px rgba(47,123,255,.28)}
+.historia.hoy{border:2px solid var(--azul);box-shadow:6px 6px 0 var(--cian)}
+.portada-nota{position:relative;aspect-ratio:16/9;overflow:hidden;display:flex;align-items:flex-end;padding:16px;
+  background:linear-gradient(180deg,#081046 0%,#101C80 60%,#050824 60.5%,#02051A 100%);background-size:cover;background-position:center}
+.portada-nota::before{content:"";position:absolute;inset:60% 0 0 0;
+  background-image:linear-gradient(rgba(69,224,255,.45) 1px,transparent 1px),linear-gradient(90deg,rgba(69,224,255,.45) 1px,transparent 1px);background-size:28px 14px;opacity:.7}
+.portada-nota::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(180deg,rgba(255,255,255,.04) 0 1px,transparent 1px 3px)}
+.portada-nota.con-foto::before{inset:0;background:linear-gradient(180deg,rgba(5,8,36,.1) 30%,rgba(5,8,36,.92));opacity:1}
+.anio-grande{position:relative;z-index:1;margin:0;font-family:var(--display);font-size:clamp(54px,7vw,76px);line-height:.9;
+  background:linear-gradient(180deg,#fff 0%,#CFE6FF 40%,#2F7BFF 50%,#0A1A66 54%,#45E0FF 78%,#fff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 12px rgba(47,123,255,.6))}
+.con-foto .anio-grande{font-size:clamp(40px,5vw,52px)}
+.hace{position:absolute;z-index:2;top:12px;left:12px;padding:4px 10px;border-radius:3px;background:var(--noche-2);border:1px solid var(--cian);font-family:var(--lcd);font-size:20px;letter-spacing:1px;color:var(--cian)}
+.es-hoy .hace{background:var(--rojo);border-color:var(--rojo);color:#fff;animation:latido 1.6s ease-in-out infinite}
+.nota-cuerpo{display:flex;flex-direction:column;gap:8px;padding:20px 22px 22px;flex:1 1 auto}
+.nota-meta{margin:0;font-family:var(--lcd);font-size:19px;letter-spacing:1px;color:var(--texto-tenue)}
+.nota-meta b{font-weight:400;color:var(--cian)}
+.historia h3{margin:0;font-family:var(--titulos);font-weight:400;font-size:21px;line-height:1.25;color:#fff}
+.nota-resumen{margin:0;color:var(--texto-suave);font-size:15px}
+.leer{align-self:flex-start;margin-top:auto;padding:8px 0 0;border:0;background:none;font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#7FD8FF}
+.historia:hover .leer{color:#fff}
+.mas-notas{display:flex;justify-content:center;margin-top:32px}
+.mas-notas[hidden],.filtros[hidden]{display:none}
+.sin-notas{color:var(--texto-tenue)}
+
+/* Lector de la historia */
+.lector{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom))}
+.lector[hidden]{display:none}
+.lector-fondo{position:absolute;inset:0;background:rgba(2,5,26,.82);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:aparecer .25s ease}
+.lector-caja{position:relative;width:100%;max-width:760px;max-height:100%;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;border:2px solid var(--azul);border-radius:12px;background:var(--noche);box-shadow:0 0 0 6px var(--noche),0 0 60px rgba(47,123,255,.45);animation:subir .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes aparecer{from{opacity:0}}
+@keyframes subir{from{opacity:0;transform:translateY(24px)}}
+.lector .portada-nota{aspect-ratio:auto;min-height:200px}
+.lector .anio-grande{font-size:clamp(64px,12vw,110px)}
+.lector .con-foto .anio-grande{font-size:clamp(48px,8vw,72px)}
+.lector-cuerpo{padding:26px clamp(20px,4vw,40px) 32px}
+.lector-cuerpo h2{margin:6px 0 18px;font-family:var(--titulos);font-weight:400;font-size:clamp(26px,4vw,36px);line-height:1.15;color:#fff}
+.lector-texto p{margin:0 0 16px;font-size:17px;line-height:1.7;color:var(--hielo)}
+.lector-texto strong{color:var(--cian);font-weight:600}
+.lector-cerrar{position:sticky;top:12px;float:right;margin:12px 12px -56px 0;z-index:3;width:44px;height:44px;border-radius:50%;border:2px solid var(--cian);background:var(--noche-2);color:#fff;font-size:20px;line-height:1}
+.lector-cerrar:hover{background:var(--azul)}
+body.leyendo{overflow:hidden}
+
 /* ---------- Celulares y tablets ---------- */
 @media (max-width:860px){
   .boton-menu{display:inline-flex}
@@ -327,6 +378,7 @@ button{cursor:pointer}
     <nav class="menu" id="menu" aria-label="Principal">
       <a href="#en-vivo">En vivo</a>
       <a href="#programacion">Programación</a>
+      <a href="#rebobinando">Rebobinando</a>
       <a href="#pedidos">Pide tu canción</a>
       <a href="#contacto">Contacto</a>
     </nav>
@@ -415,6 +467,23 @@ button{cursor:pointer}
     </div>
   </section>
 
+
+  <!-- REBOBINANDO: historias de la música (se llena sola con la lista HISTORIAS del final del archivo) -->
+  <section class="seccion" id="rebobinando" style="padding-top:0">
+    <div class="contenedor">
+      <div class="cabecera-seccion aparece">
+        <div>
+          <p class="etiqueta-lcd">// ◀◀ REBOBINANDO</p>
+          <h2>Un día como hoy en la música</h2>
+        </div>
+        <span class="nota-meta">Conciertos, discos y momentos que marcaron época</span>
+      </div>
+      <div class="filtros" id="filtros" role="group" aria-label="Filtrar historias"></div>
+      <div class="notas" id="notas"></div>
+      <div class="mas-notas" id="mas-notas" hidden><button class="boton boton-borde" type="button" id="boton-mas">Cargar más historias</button></div>
+    </div>
+  </section>
+
   <!-- SONÓ HACE POCO + PEDIDOS -->
   <section id="pedidos">
     <div class="contenedor dos-columnas">
@@ -482,6 +551,25 @@ button{cursor:pointer}
   </div>
 </div>
 
+
+<!-- Lector de historias -->
+<div class="lector" id="lector" hidden role="dialog" aria-modal="true" aria-labelledby="lector-titulo">
+  <div class="lector-fondo" data-cerrar></div>
+  <article class="lector-caja" id="lector-caja" tabindex="-1">
+    <button class="lector-cerrar" type="button" data-cerrar aria-label="Cerrar historia">✕</button>
+    <div class="portada-nota" id="lector-portada"></div>
+    <div class="lector-cuerpo">
+      <p class="nota-meta" id="lector-meta"></p>
+      <h2 id="lector-titulo"></h2>
+      <div class="lector-texto" id="lector-texto"></div>
+      <div class="fila-botones">
+        <button class="boton boton-principal" type="button" id="lector-compartir">Compartir</button>
+        <button class="boton boton-borde" type="button" data-cerrar>Volver</button>
+      </div>
+    </div>
+  </article>
+</div>
+
 <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
 
 <script>
@@ -504,7 +592,73 @@ var CONFIG = {
     { inicio: "19:00", fin: "24:00", nombre: "[Programa de la noche]",  locutor: "[Locutor]", descripcion: "[Una línea sobre el programa.]" }
   ],
   // Lo que se muestra cuando ningún programa está al aire
-  SIN_PROGRAMA: "Música continua"
+  SIN_PROGRAMA: "Música continua",
+
+  // ◀◀ REBOBINANDO — historias de la música.
+  // Para agregar una, copia un bloque { ... }, pégalo ARRIBA de todo y cambia los datos.
+  //  fecha:     "AAAA-MM-DD" del suceso. El "hace X años" se calcula solo, y el día del
+  //             aniversario la historia sube de primera con la marca "HOY".
+  //  categoria: la que quieras (Conciertos, Discos, Historia...). Los botones de filtro salen solos.
+  //  imagen:    opcional. Una foto TUYA o con permiso (ej: "img/live-aid.jpg"). Si la dejas vacía
+  //             se muestra el año en grande con el estilo retro.
+  //  texto:     cada línea entre comillas es un párrafo. Usa *así* para resaltar en azul.
+  HISTORIAS: [
+    {
+      fecha: "1997-09-20", categoria: "Conciertos", imagen: "",
+      titulo: "Soda Stereo se despide en River Plate",
+      resumen: "La noche en que la banda más grande del rock en español dijo adiós en Buenos Aires.",
+      texto: [
+        "El 20 de septiembre de 1997, Soda Stereo dio en el estadio de River Plate el último concierto de su gira de despedida.",
+        "Desde el escenario, Gustavo Cerati cerró con un *«¡Gracias totales!»* que quedó para siempre en la memoria de toda una generación.",
+        "Diez años después, en 2007, la banda volvió a reunirse con la gira *Me verás volver*."
+      ]
+    },
+    {
+      fecha: "1985-07-13", categoria: "Conciertos", imagen: "",
+      titulo: "Live Aid: el concierto que vio medio planeta",
+      resumen: "Dos estadios, dos continentes y una sola causa. Y unos 20 minutos de Queen que nadie olvida.",
+      texto: [
+        "El 13 de julio de 1985 se celebró *Live Aid*, un concierto doble en el estadio de Wembley (Londres) y el JFK Stadium (Filadelfia) para recaudar fondos contra la hambruna en Etiopía.",
+        "La transmisión llegó a televisores de todo el mundo, y muchos consideran la presentación de *Queen* en Wembley una de las mejores de la historia del rock."
+      ]
+    },
+    {
+      fecha: "1987-07-21", categoria: "Discos", imagen: "",
+      titulo: "Guns N' Roses lanza Appetite for Destruction",
+      resumen: "El debut que puso al hard rock de Los Ángeles en todas las radios.",
+      texto: [
+        "El 21 de julio de 1987 salió *Appetite for Destruction*, el primer álbum de estudio de Guns N' Roses.",
+        "Al principio se vendió despacio, pero con *Sweet Child o' Mine* y *Welcome to the Jungle* sonando en radio y en MTV terminó convirtiéndose en uno de los debuts más vendidos de la historia."
+      ]
+    },
+    {
+      fecha: "1982-11-30", categoria: "Discos", imagen: "",
+      titulo: "Thriller llega a las tiendas",
+      resumen: "Michael Jackson publica el disco que rompería todos los récords.",
+      texto: [
+        "El 30 de noviembre de 1982 salió *Thriller*, el sexto álbum de estudio de Michael Jackson.",
+        "Con éxitos como *Billie Jean* y *Beat It*, y un videoclip que cambió la forma de hacer videos, se convirtió en el álbum más vendido de todos los tiempos."
+      ]
+    },
+    {
+      fecha: "1981-08-01", categoria: "Historia", imagen: "",
+      titulo: "Nace MTV: el video mató a la estrella de radio",
+      resumen: "El primer video que pasó el canal fue toda una declaración de intenciones.",
+      texto: [
+        "El 1 de agosto de 1981 salió al aire MTV, el primer canal dedicado las 24 horas a los videos musicales.",
+        "El primer video que transmitió fue *Video Killed the Radio Star* de The Buggles. Aquí en Elquizst seguimos pensando que la radio sigue más viva que nunca."
+      ]
+    },
+    {
+      fecha: "1991-09-24", categoria: "Discos", imagen: "",
+      titulo: "Nirvana publica Nevermind",
+      resumen: "El disco que llevó el grunge de Seattle a todo el mundo.",
+      texto: [
+        "El 24 de septiembre de 1991 salió *Nevermind*, el segundo álbum de Nirvana.",
+        "Gracias a *Smells Like Teen Spirit*, en pocos meses pasó de ser un disco de una banda alternativa a desbancar a los grandes de las listas."
+      ]
+    }
+  ]
 };
 
 /* =========================================================
@@ -696,6 +850,113 @@ var CONFIG = {
     e.target.reset();
     avisar("¡Listo! Envía el mensaje en WhatsApp y suena pronto.");
   });
+
+
+  /* ---------- Rebobinando: historias ---------- */
+  var MESES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+  var POR_PAGINA = 6, mostradas = POR_PAGINA, filtro = "Todas";
+  var historias = (CONFIG.HISTORIAS || []).map(function (h, i) {
+    var p = String(h.fecha || "").split("-"), y = +p[0], m = (+p[1] || 1) - 1, d = +p[2] || 1;
+    var slug = String(h.titulo || "historia").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || ("historia-" + i);
+    return { datos: h, anio: y, mes: m, dia: d, slug: slug, orden: i };
+  });
+  function infoFecha(h) {
+    var hoy = new Date();
+    var hace = hoy.getFullYear() - h.anio - ((hoy.getMonth() < h.mes || (hoy.getMonth() === h.mes && hoy.getDate() < h.dia)) ? 1 : 0);
+    var esHoy = hoy.getMonth() === h.mes && hoy.getDate() === h.dia;
+    var texto = hace <= 0 ? "ESTE AÑO" : "HACE " + hace + (hace === 1 ? " AÑO" : " AÑOS");
+    return { hace: hace, hoy: esHoy, etiqueta: (esHoy ? "HOY · " : "") + texto, larga: h.dia + " de " + MESES[h.mes] + " de " + h.anio };
+  }
+  function textoRico(t) { return escapar(t).replace(/\*([^*]+)\*/g, "<strong>$1</strong>"); }
+  function ponerPortada(el, h, info) {
+    el.className = "portada-nota" + (h.datos.imagen ? " con-foto" : "") + (info.hoy ? " es-hoy" : "");
+    el.style.backgroundImage = h.datos.imagen ? 'url("' + String(h.datos.imagen).replace(/["\\\n]/g, "") + '")' : "";
+    el.innerHTML = '<span class="hace">' + escapar(info.etiqueta) + '</span><p class="anio-grande" aria-hidden="true">' + h.anio + "</p>";
+  }
+
+  var cajaNotas = $("#notas"), cajaFiltros = $("#filtros"), cajaMas = $("#mas-notas");
+  function ordenadas() {
+    return historias.slice().sort(function (a, b) {
+      return (infoFecha(b).hoy ? 1 : 0) - (infoFecha(a).hoy ? 1 : 0) || a.orden - b.orden;
+    });
+  }
+  function pintarFiltros() {
+    var cats = ["Todas"];
+    historias.forEach(function (h) { var c = h.datos.categoria; if (c && cats.indexOf(c) < 0) cats.push(c); });
+    cajaFiltros.hidden = cats.length < 3;
+    cajaFiltros.innerHTML = "";
+    cats.forEach(function (c) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "chip"; b.textContent = c;
+      b.setAttribute("aria-pressed", String(c === filtro));
+      b.addEventListener("click", function () { filtro = c; mostradas = POR_PAGINA; pintarFiltros(); pintarNotas(); });
+      cajaFiltros.appendChild(b);
+    });
+  }
+  function pintarNotas() {
+    var lista = ordenadas().filter(function (h) { return filtro === "Todas" || h.datos.categoria === filtro; });
+    cajaNotas.innerHTML = "";
+    if (!lista.length) { cajaNotas.innerHTML = '<p class="sin-notas">Pronto subiremos nuevas historias.</p>'; }
+    lista.slice(0, mostradas).forEach(function (h) {
+      var info = infoFecha(h);
+      var b = document.createElement("article");
+      b.className = "historia aparece" + (info.hoy ? " hoy" : "");
+      b.innerHTML = '<div class="portada-nota"></div><div class="nota-cuerpo">' +
+        '<p class="nota-meta"><b>' + escapar(h.datos.categoria || "Historia") + "</b> · " + escapar(info.larga) + "</p>" +
+        "<h3>" + escapar(h.datos.titulo || "") + "</h3>" +
+        '<p class="nota-resumen">' + escapar(h.datos.resumen || "") + "</p>" +
+        '<button type="button" class="leer">Leer historia →</button></div>';
+      ponerPortada($(".portada-nota", b), h, info);
+      b.addEventListener("click", function () { abrirHistoria(h, $(".leer", b)); });
+      cajaNotas.appendChild(b);
+    });
+    cajaMas.hidden = lista.length <= mostradas;
+    observar($$(".historia", cajaNotas));
+  }
+  $("#boton-mas").addEventListener("click", function () { mostradas += POR_PAGINA; pintarNotas(); });
+
+  var lector = $("#lector"), lectorCaja = $("#lector-caja"), abiertaDesde = null, actualHistoria = null;
+  function abrirHistoria(h, origen) {
+    var info = infoFecha(h);
+    actualHistoria = h; abiertaDesde = origen || null;
+    ponerPortada($("#lector-portada"), h, info);
+    $("#lector-meta").innerHTML = "<b>" + escapar(h.datos.categoria || "Historia") + "</b> · " + escapar(info.larga);
+    $("#lector-titulo").textContent = h.datos.titulo || "";
+    var parrafos = [].concat(h.datos.texto || h.datos.resumen || []);
+    $("#lector-texto").innerHTML = parrafos.map(function (t) { return "<p>" + textoRico(t) + "</p>"; }).join("");
+    lector.hidden = false;
+    document.body.classList.add("leyendo");
+    lectorCaja.scrollTop = 0;
+    lectorCaja.focus({ preventScroll: true });
+    if (location.hash !== "#historia/" + h.slug) history.replaceState(null, "", "#historia/" + h.slug);
+  }
+  function cerrarHistoria() {
+    if (lector.hidden) return;
+    lector.hidden = true;
+    document.body.classList.remove("leyendo");
+    history.replaceState(null, "", location.pathname + location.search + "#rebobinando");
+    if (abiertaDesde) abiertaDesde.focus({ preventScroll: true });
+  }
+  $$("[data-cerrar]", lector).forEach(function (el) { el.addEventListener("click", cerrarHistoria); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") cerrarHistoria(); });
+  $("#lector-compartir").addEventListener("click", function () {
+    if (!actualHistoria) return;
+    var url = location.href.split("#")[0] + "#historia/" + actualHistoria.slug;
+    var titulo = (actualHistoria.datos.titulo || "") + " — " + infoFecha(actualHistoria).etiqueta.toLowerCase();
+    if (navigator.share) { navigator.share({ title: titulo, url: url }).catch(function () {}); return; }
+    window.open("https://wa.me/?text=" + encodeURIComponent(titulo + "\n" + url), "_blank", "noopener");
+  });
+  function abrirDesdeEnlace() {
+    var m = location.hash.match(/^#historia\/(.+)$/);
+    if (!m) return;
+    var h = historias.filter(function (x) { return x.slug === decodeURIComponent(m[1]); })[0];
+    if (h) abrirHistoria(h);
+  }
+  window.addEventListener("hashchange", abrirDesdeEnlace);
+  pintarFiltros();
+  pintarNotas();
+  abrirDesdeEnlace();
 
   $("#anio").textContent = new Date().getFullYear();
 })();
