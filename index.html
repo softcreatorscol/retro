@@ -72,11 +72,11 @@ button{cursor:pointer}
 .logo-pie{font-size:24px}
 .menu{display:flex;align-items:center;gap:26px}
 .menu a{white-space:nowrap}
-html{scroll-padding-top:calc(76px + env(safe-area-inset-top))}
+html{scroll-padding-top:calc(76px + env(safe-area-inset-top));scroll-padding-bottom:96px}
 .portada h1.cromado{white-space:nowrap;font-size:clamp(38px,7.6vw,100px)}
 @media (max-width:600px){.portada h1.cromado{font-size:calc((100vw - 40px) / 6.6)}}
 @media (min-width:861px) and (max-width:1300px){.menu{gap:16px}.menu a{font-size:12.5px;letter-spacing:1px}.logo{font-size:17px}.logo svg{width:30px;height:30px}}
-@media (min-width:861px) and (max-width:1020px){.encabezado .pildora-vivo{display:none}}
+@media (min-width:861px) and (max-width:1120px){.encabezado .pildora-vivo{display:none}}
 .menu a{color:var(--hielo);text-decoration:none;font-weight:600;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;padding:10px 0;position:relative}
 .menu a::after{content:"";position:absolute;left:0;right:0;bottom:4px;height:2px;background:var(--cian);transform:scaleX(0);transform-origin:left;transition:transform .25s}
 .menu a:hover::after{transform:scaleX(1)}
@@ -355,6 +355,62 @@ html{scroll-padding-top:calc(76px + env(safe-area-inset-top))}
   .calendario b{font-size:28px}
 }
 
+/* ---------- Trivia ---------- */
+.consola{position:relative;max-width:860px;margin:0 auto;padding:clamp(20px,4vw,40px);border-radius:16px;border:2px solid var(--azul);
+  background:radial-gradient(120% 80% at 50% 0%,#12207A 0%,var(--noche-2) 70%);box-shadow:8px 8px 0 var(--cian),0 0 60px rgba(47,123,255,.25);overflow:hidden}
+.consola::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(180deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px)}
+.trivia-pantalla{position:relative;z-index:1}
+.trivia-pantalla[hidden]{display:none}
+#trivia-inicio,#trivia-final{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:12px 0}
+#trivia-inicio[hidden],#trivia-final[hidden]{display:none}
+.trivia-logo{margin:0;font-family:var(--display);font-size:clamp(64px,13vw,120px);line-height:1;letter-spacing:4px;color:#fff;
+  text-shadow:0 0 18px rgba(69,224,255,.8),0 0 40px rgba(47,123,255,.6)}
+.trivia-titulo{margin:0;font-family:var(--titulos);font-weight:400;font-size:clamp(24px,3.4vw,32px);color:#fff}
+.trivia-texto{margin:0 0 8px;max-width:520px;color:var(--texto-suave)}
+.trivia-record{margin:0;font-family:var(--lcd);font-size:24px;letter-spacing:2px;color:var(--cian)}
+.trivia-record[hidden]{display:none}
+.lcd-chico{font-family:var(--lcd);font-size:22px;letter-spacing:2px;color:var(--texto-tenue)}
+.lcd-chico b{font-weight:400;color:var(--cian)}
+.trivia-barra{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.trivia-tiempo{height:10px;margin:10px 0 4px;border-radius:999px;background:#0A1450;border:1px solid var(--linea);overflow:hidden}
+.trivia-tiempo i{display:block;height:100%;width:100%;transform-origin:left;background:linear-gradient(90deg,var(--cian),var(--azul))}
+.trivia-tiempo.poco i{background:var(--rojo)}
+.trivia-seg{display:block;text-align:right;font-size:20px}
+.trivia-categoria{margin:6px 0 0;font-family:var(--lcd);font-size:20px;letter-spacing:2px;color:var(--cian);text-transform:uppercase}
+.trivia-pregunta{margin:6px 0 22px;font-family:var(--titulos);font-weight:400;font-size:clamp(22px,3.2vw,30px);line-height:1.3;color:#fff;outline:none}
+.trivia-opciones{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.opcion{display:flex;align-items:center;gap:14px;min-height:64px;padding:12px 16px;border-radius:8px;border:2px solid var(--linea);background:var(--panel);
+  color:#fff;font:inherit;font-size:17px;font-weight:600;text-align:left;cursor:pointer;transition:transform .15s,border-color .15s,background .15s,box-shadow .15s}
+.opcion .letra{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex:none;border-radius:6px;background:var(--noche-2);border:1px solid var(--cian);
+  font-family:var(--lcd);font-size:24px;color:var(--cian)}
+.opcion:disabled{cursor:default}
+.opcion.bien{border-color:var(--cian);background:rgba(69,224,255,.18);box-shadow:0 0 18px rgba(69,224,255,.45)}
+.opcion.bien .letra{background:var(--cian);color:var(--noche-2)}
+.opcion.mal{border-color:var(--rojo);background:rgba(255,77,109,.16)}
+.opcion.mal .letra{background:var(--rojo);border-color:var(--rojo);color:#fff}
+.opcion.apagada{opacity:.45}
+.trivia-resultado{min-height:0;margin-top:18px}
+.trivia-resultado:empty{margin:0}
+.trivia-resultado p{margin:0;color:var(--hielo)}
+.trivia-resultado .veredicto{margin-bottom:6px;font-family:var(--lcd);font-size:26px;letter-spacing:2px}
+.veredicto.si{color:var(--cian)}
+.veredicto.no{color:var(--rojo)}
+.trivia-siguiente{display:flex;justify-content:flex-end;margin-top:18px}
+.trivia-siguiente[hidden]{display:none}
+.trivia-puntaje{margin:0;font-family:var(--display);font-size:clamp(72px,14vw,130px);line-height:1;color:#fff;text-shadow:0 0 20px rgba(69,224,255,.7)}
+.trivia-botones{justify-content:center}
+.trivia-botones [hidden]{display:none}
+@keyframes sacudir{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.opcion.mal{animation:sacudir .35s}
+@media (hover:hover){
+  .opcion:not(:disabled):hover{transform:translateY(-2px);border-color:var(--azul);background:#101C80}
+}
+@media (max-width:600px){
+  .trivia-opciones{grid-template-columns:minmax(0,1fr);gap:10px}
+  .opcion{min-height:56px;font-size:16px}
+  .trivia-siguiente .boton{width:100%}
+}
+
 /* Lector de la historia */
 .lector{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom))}
 .lector[hidden]{display:none}
@@ -372,6 +428,19 @@ html{scroll-padding-top:calc(76px + env(safe-area-inset-top))}
 .lector-cerrar{position:sticky;top:12px;float:right;margin:12px 12px -56px 0;z-index:3;width:44px;height:44px;border-radius:50%;border:2px solid var(--cian);background:var(--noche-2);color:#fff;font-size:20px;line-height:1}
 .lector-cerrar:hover{background:var(--azul)}
 body.leyendo{overflow:hidden}
+
+/* Laptops pequeñas y tablets en horizontal: menú desplegable */
+@media (min-width:861px) and (max-width:1060px){
+  .boton-menu{display:inline-flex}
+  .encabezado .pildora-vivo{display:none}
+  .logo{font-size:20px}.logo svg{width:34px;height:34px}
+  .menu{position:fixed;left:0;right:0;top:calc(68px + env(safe-area-inset-top));flex-direction:column;align-items:stretch;gap:0;
+    padding:8px 20px 24px;background:rgba(5,8,36,.98);border-bottom:2px solid var(--azul);
+    transform:translateY(-12px);opacity:0;visibility:hidden;transition:opacity .25s,transform .25s,visibility .25s}
+  .menu a{font-size:18px;padding:16px 4px;border-bottom:1px solid var(--linea)}
+  .menu a::after{display:none}
+  .menu-abierto .menu{transform:none;opacity:1;visibility:visible}
+}
 
 /* ---------- Celulares y tablets ---------- */
 @media (max-width:860px){
@@ -424,6 +493,7 @@ body.leyendo{overflow:hidden}
       <a href="#en-vivo">En vivo</a>
       <a href="#programacion">Programación</a>
       <a href="#noticias">Noticias</a>
+      <a href="#trivia">Trivia</a>
       <a href="#rebobinando">Rebobinando</a>
       <a href="#pedidos">Pide tu canción</a>
       <a href="#contacto">Contacto</a>
@@ -526,6 +596,62 @@ body.leyendo{overflow:hidden}
       </div>
       <div class="noticias" id="lista-noticias"></div>
       <div class="mas-notas" id="mas-noticias" hidden><button class="boton boton-borde" type="button" id="boton-mas-noticias">Ver más noticias</button></div>
+    </div>
+  </section>
+
+  <!-- TRIVIA: juego de preguntas (se llena solo con la lista TRIVIA del final del archivo) -->
+  <section class="seccion" id="trivia" style="padding-top:0">
+    <div class="contenedor">
+      <div class="cabecera-seccion aparece">
+        <div>
+          <p class="etiqueta-lcd">// ▶ ELQUIZ · TRIVIA</p>
+          <h2>¿Cuánto sabes de música?</h2>
+        </div>
+        <span class="nota-meta" id="trivia-reglas-corto">Responde rápido: entre más rápido, más puntos</span>
+      </div>
+
+      <div class="consola aparece" id="consola">
+        <!-- Pantalla de inicio -->
+        <div class="trivia-pantalla" id="trivia-inicio">
+          <p class="trivia-logo" aria-hidden="true">QUIZ</p>
+          <h3 class="trivia-titulo">Trivia musical</h3>
+          <p class="trivia-texto" id="trivia-descripcion">Preguntas de rock, pop y clásicos de radio.</p>
+          <p class="trivia-record" id="trivia-record" hidden></p>
+          <button class="boton boton-principal" type="button" id="trivia-jugar">▶ Jugar</button>
+        </div>
+
+        <!-- Pregunta -->
+        <div class="trivia-pantalla trivia-juego" id="trivia-juego" hidden>
+          <div class="trivia-barra">
+            <span class="lcd-chico">PREGUNTA <b id="trivia-num">01</b>/<span id="trivia-total">10</span></span>
+            <span class="lcd-chico">PUNTOS <b id="trivia-puntos">0000</b></span>
+          </div>
+          <div class="trivia-tiempo" aria-hidden="true"><i id="trivia-tiempo-barra"></i></div>
+          <span class="lcd-chico trivia-seg" id="trivia-seg" aria-hidden="true">15</span>
+          <p class="trivia-categoria" id="trivia-categoria"></p>
+          <h3 class="trivia-pregunta" id="trivia-pregunta" tabindex="-1"></h3>
+          <div class="trivia-opciones" id="trivia-opciones" role="group" aria-label="Opciones de respuesta"></div>
+          <div class="trivia-resultado" id="trivia-resultado" aria-live="polite"></div>
+          <div class="trivia-siguiente" id="trivia-siguiente-caja" hidden>
+            <button class="boton boton-principal" type="button" id="trivia-siguiente">Siguiente →</button>
+          </div>
+        </div>
+
+        <!-- Final -->
+        <div class="trivia-pantalla" id="trivia-final" hidden>
+          <p class="lcd-chico">FIN DEL JUEGO</p>
+          <p class="trivia-puntaje" id="trivia-puntaje-final">0</p>
+          <p class="lcd-chico">PUNTOS · <span id="trivia-aciertos">0/10</span> CORRECTAS</p>
+          <h3 class="trivia-titulo" id="trivia-rango"></h3>
+          <p class="trivia-texto" id="trivia-mensaje"></p>
+          <p class="trivia-record" id="trivia-nuevo-record" hidden>★ ¡NUEVO RÉCORD! ★</p>
+          <div class="fila-botones trivia-botones">
+            <button class="boton boton-principal" type="button" id="trivia-otra">Jugar otra vez</button>
+            <button class="boton boton-borde" type="button" id="trivia-compartir">Retar a un amigo</button>
+            <button class="boton boton-borde" type="button" id="trivia-emisora" hidden>Enviar puntaje a la emisora</button>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -702,6 +828,60 @@ var CONFIG = {
       ]
     }
   ],
+
+  // 🎮 TRIVIA — juego de preguntas.
+  //  PREGUNTAS_POR_RONDA: cuántas salen en cada partida (se escogen al azar de la lista).
+  //  SEGUNDOS: tiempo para responder cada una. Entre más rápido respondan, más puntos.
+  //  Para agregar una pregunta, copia un bloque { ... } y cambia los datos:
+  //    pregunta:  el texto de la pregunta.
+  //    opciones:  4 respuestas (el orden se mezcla solo en cada partida).
+  //    respuesta: la correcta, escrita IGUAL que en las opciones.
+  //    dato:      opcional. Un dato curioso que sale después de responder.
+  TRIVIA: {
+    PREGUNTAS_POR_RONDA: 10,
+    SEGUNDOS: 15,
+    PREGUNTAS: [
+      { categoria: "Pop", pregunta: "¿Qué cantante es conocida como la «Reina del Pop»?",
+        opciones: ["Whitney Houston", "Cher", "Madonna", "Cyndi Lauper"], respuesta: "Madonna",
+        dato: "Madonna se ganó el título en los años 80 con éxitos como *Like a Virgin* y *Material Girl*." },
+      { categoria: "Pop", pregunta: "¿A quién se le conoce como el «Rey del Pop»?",
+        opciones: ["Prince", "Michael Jackson", "Elvis Presley", "George Michael"], respuesta: "Michael Jackson",
+        dato: "A Elvis Presley, en cambio, lo llamaban el *Rey del Rock and Roll*." },
+      { categoria: "Rock", pregunta: "¿Qué banda grabó «Bohemian Rhapsody»?",
+        opciones: ["Queen", "The Beatles", "Led Zeppelin", "Pink Floyd"], respuesta: "Queen",
+        dato: "Salió en 1975 en el disco *A Night at the Opera*." },
+      { categoria: "Rock", pregunta: "¿Cómo se llamaba el vocalista de Queen?",
+        opciones: ["Mick Jagger", "Robert Plant", "Freddie Mercury", "Bono"], respuesta: "Freddie Mercury" },
+      { categoria: "Rock en español", pregunta: "¿Quién era el vocalista de Soda Stereo?",
+        opciones: ["Charly García", "Gustavo Cerati", "Fito Páez", "Andrés Calamaro"], respuesta: "Gustavo Cerati",
+        dato: "Soda Stereo se despidió en 1997 con su famoso *«¡Gracias totales!»*." },
+      { categoria: "Discos", pregunta: "¿En qué año salió el disco «Thriller» de Michael Jackson?",
+        opciones: ["1979", "1982", "1985", "1987"], respuesta: "1982",
+        dato: "Es considerado el álbum más vendido de todos los tiempos." },
+      { categoria: "Rock", pregunta: "¿Qué banda lanzó «Smells Like Teen Spirit»?",
+        opciones: ["Pearl Jam", "Soundgarden", "Nirvana", "Foo Fighters"], respuesta: "Nirvana",
+        dato: "Abre el disco *Nevermind*, de 1991." },
+      { categoria: "Pop", pregunta: "¿De qué país es el grupo ABBA?",
+        opciones: ["Noruega", "Suecia", "Dinamarca", "Alemania"], respuesta: "Suecia",
+        dato: "Se hicieron famosos al ganar Eurovisión en 1974 con *Waterloo*." },
+      { categoria: "Historia", pregunta: "¿Qué canal de videos musicales salió al aire en 1981?",
+        opciones: ["VH1", "MTV", "Much Music", "HTV"], respuesta: "MTV",
+        dato: "El primer video que pasó fue *Video Killed the Radio Star* de The Buggles." },
+      { categoria: "Rock", pregunta: "¿Qué banda grabó «Sweet Child o' Mine»?",
+        opciones: ["Bon Jovi", "Guns N' Roses", "Aerosmith", "Def Leppard"], respuesta: "Guns N' Roses" },
+      { categoria: "Rock", pregunta: "¿De qué país es la banda U2?",
+        opciones: ["Inglaterra", "Escocia", "Irlanda", "Estados Unidos"], respuesta: "Irlanda" },
+      { categoria: "Rock", pregunta: "¿De qué ciudad eran The Beatles?",
+        opciones: ["Londres", "Mánchester", "Liverpool", "Birmingham"], respuesta: "Liverpool" },
+      { categoria: "Pop latino", pregunta: "¿Qué artista colombiana lanzó el disco «Pies descalzos» en 1995?",
+        opciones: ["Shakira", "Karol G", "Fanny Lú", "Totó la Momposina"], respuesta: "Shakira" },
+      { categoria: "Rock en español", pregunta: "¿De qué país es la banda Maná?",
+        opciones: ["Argentina", "España", "Colombia", "México"], respuesta: "México" },
+      { categoria: "Pop", pregunta: "¿Qué grupo cantó «Take On Me» en los años 80?",
+        opciones: ["a-ha", "Duran Duran", "Depeche Mode", "Tears for Fears"], respuesta: "a-ha",
+        dato: "a-ha es de Noruega y su video, mezcla de dibujo a lápiz y actores reales, es un clásico de MTV." }
+    ]
+  },
 
   // ◀◀ REBOBINANDO — historias de la música.
   // Para agregar una, copia un bloque { ... }, pégalo ARRIBA de todo y cambia los datos.
@@ -1141,6 +1321,149 @@ var CONFIG = {
     $("#lector-texto").innerHTML = html;
     mostrarLector(origen, "#noticia/" + n.slug, "#noticias", { titulo: n.datos.titulo || "", hash: "#noticia/" + n.slug });
   }
+
+  /* ---------- Trivia ---------- */
+  (function () {
+    var T = CONFIG.TRIVIA || {}, SEG = Math.max(5, +T.SEGUNDOS || 15);
+    var banco = (T.PREGUNTAS || []).filter(function (p) {
+      return p && p.pregunta && p.opciones && p.opciones.length >= 2 && p.opciones.indexOf(p.respuesta) >= 0;
+    });
+    var porRonda = Math.min(banco.length, Math.max(1, +T.PREGUNTAS_POR_RONDA || 10));
+    var inicio = $("#trivia-inicio"), juego = $("#trivia-juego"), final = $("#trivia-final");
+    var cajaOpc = $("#trivia-opciones"), cajaRes = $("#trivia-resultado"), cajaSig = $("#trivia-siguiente-caja");
+    var barra = $("#trivia-tiempo-barra"), barraCaja = barra.parentNode, segTxt = $("#trivia-seg");
+    var ronda = [], i = 0, puntos = 0, aciertos = 0, reloj = null, fin = 0, respondida = false;
+    var CLAVE = "elquizst-trivia-record";
+    function leerRecord() { try { return +localStorage.getItem(CLAVE) || 0; } catch (e) { return 0; } }
+    function guardarRecord(v) { try { localStorage.setItem(CLAVE, String(v)); } catch (e) {} }
+    function mezclar(a) { a = a.slice(); for (var k = a.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)), t = a[k]; a[k] = a[j]; a[j] = t; } return a; }
+    function cuatro(n) { return ("000" + n).slice(-4); }
+    function dos(n) { return ("0" + n).slice(-2); }
+    function ver(el) { [inicio, juego, final].forEach(function (x) { x.hidden = x !== el; }); }
+
+    $("#trivia-descripcion").textContent = porRonda + " preguntas de rock, pop y clásicos de radio. Tienes " + SEG + " segundos para cada una.";
+    function pintarRecord() {
+      var r = leerRecord(), el = $("#trivia-record");
+      el.hidden = !r; el.textContent = "TU RÉCORD: " + cuatro(r) + " PUNTOS";
+    }
+    pintarRecord();
+    if (!banco.length) { $("#trivia-jugar").disabled = true; $("#trivia-descripcion").textContent = "Pronto habrá nuevas preguntas."; }
+
+    function empezar() {
+      ronda = mezclar(banco).slice(0, porRonda);
+      i = 0; puntos = 0; aciertos = 0;
+      $("#trivia-total").textContent = dos(ronda.length);
+      ver(juego);
+      mostrarPregunta();
+      alConsola();
+    }
+    function alConsola() {
+      var y = $("#consola").getBoundingClientRect().top;
+      if (y < 60 || y > 140) {
+        var destino = scrollY + y - $("#encabezado").offsetHeight - 10;
+        setTimeout(function () { window.scrollTo({ top: destino, behavior: "smooth" }); }, 60);
+      }
+    }
+    function mostrarPregunta() {
+      var p = ronda[i];
+      respondida = false;
+      $("#trivia-num").textContent = dos(i + 1);
+      $("#trivia-puntos").textContent = cuatro(puntos);
+      $("#trivia-categoria").textContent = p.categoria || "Música";
+      $("#trivia-pregunta").textContent = p.pregunta;
+      cajaRes.innerHTML = ""; cajaSig.hidden = true;
+      cajaOpc.innerHTML = "";
+      mezclar(p.opciones).forEach(function (o, k) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "opcion"; b.dataset.valor = o;
+        b.innerHTML = '<span class="letra" aria-hidden="true">' + "ABCD".charAt(k) + "</span><span>" + escapar(o) + "</span>";
+        b.addEventListener("click", function () { responder(o); });
+        cajaOpc.appendChild(b);
+      });
+      $("#trivia-pregunta").focus({ preventScroll: true });
+      fin = Date.now() + SEG * 1000;
+      clearInterval(reloj);
+      tic(); reloj = setInterval(tic, 100);
+    }
+    function tic() {
+      var resta = Math.max(0, fin - Date.now());
+      barra.style.transform = "scaleX(" + (resta / (SEG * 1000)) + ")";
+      segTxt.textContent = Math.ceil(resta / 1000);
+      barraCaja.classList.toggle("poco", resta < 5000);
+      if (resta <= 0) responder(null);
+    }
+    function responder(valor) {
+      if (respondida) return;
+      respondida = true; clearInterval(reloj);
+      var p = ronda[i], bien = valor === p.respuesta;
+      var resta = Math.max(0, fin - Date.now());
+      var gana = bien ? 100 + Math.round((resta / (SEG * 1000)) * 100) : 0;
+      if (bien) { puntos += gana; aciertos++; }
+      $("#trivia-puntos").textContent = cuatro(puntos);
+      $$(".opcion", cajaOpc).forEach(function (b) {
+        b.disabled = true;
+        if (b.dataset.valor === p.respuesta) b.classList.add("bien");
+        else if (b.dataset.valor === valor) b.classList.add("mal");
+        else b.classList.add("apagada");
+      });
+      var titulo = bien ? "¡CORRECTO! +" + gana : (valor === null ? "¡SE ACABÓ EL TIEMPO!" : "¡UY, NO!");
+      cajaRes.innerHTML = '<p class="veredicto ' + (bien ? "si" : "no") + '">' + titulo + "</p>" +
+        (bien ? "" : "<p>La respuesta era <strong>" + escapar(p.respuesta) + "</strong>.</p>") +
+        (p.dato ? "<p>" + textoRico(p.dato) + "</p>" : "");
+      $("#trivia-siguiente").textContent = i + 1 < ronda.length ? "Siguiente →" : "Ver resultado →";
+      cajaSig.hidden = false;
+      $("#trivia-siguiente").focus({ preventScroll: true });
+      var r = cajaSig.getBoundingClientRect();
+      if (r.bottom > innerHeight - 90) cajaSig.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+    function terminar() {
+      ver(final);
+      var total = ronda.length, pct = aciertos / total;
+      var rango = pct === 1 ? ["Leyenda del vinilo", "¡Perfecto! Sabes más que el locutor."] :
+                  pct >= 0.8 ? ["Locutor estrella", "Te sabes casi todo. Eres de los que se saben la letra completa."] :
+                  pct >= 0.5 ? ["DJ de garaje", "Nada mal. Sigue sintonizando y la próxima subes de nivel."] :
+                  pct >= 0.2 ? ["Oyente en formación", "Vas bien. Quédate con nosotros y en nada eres un experto."] :
+                               ["Recién sintonizado", "¡Bienvenido! Dale play a la emisora y vuelve a intentarlo."];
+      $("#trivia-puntaje-final").textContent = puntos;
+      $("#trivia-aciertos").textContent = aciertos + "/" + total;
+      $("#trivia-rango").textContent = rango[0];
+      $("#trivia-mensaje").textContent = rango[1];
+      var nuevo = puntos > leerRecord();
+      if (nuevo) guardarRecord(puntos);
+      $("#trivia-nuevo-record").hidden = !(nuevo && puntos > 0);
+      $("#trivia-emisora").hidden = !CONFIG.WHATSAPP;
+      pintarRecord();
+      $("#trivia-otra").focus({ preventScroll: true });
+    }
+    function textoPuntaje() {
+      return "Saqué " + puntos + " puntos (" + aciertos + "/" + ronda.length + " correctas) en la trivia musical de www.elquiz-st.com 🎵 ¿Me ganas?";
+    }
+    $("#trivia-jugar").addEventListener("click", empezar);
+    $("#trivia-otra").addEventListener("click", empezar);
+    $("#trivia-siguiente").addEventListener("click", function () { i++; if (i < ronda.length) mostrarPregunta(); else terminar(); alConsola(); });
+    $("#trivia-compartir").addEventListener("click", function () {
+      var url = location.href.split("#")[0] + "#trivia", txt = textoPuntaje();
+      if (navigator.share) { navigator.share({ title: "Trivia musical", text: txt, url: url }).catch(function () {}); return; }
+      window.open("https://wa.me/?text=" + encodeURIComponent(txt + "\n" + url), "_blank", "noopener");
+    });
+    $("#trivia-emisora").addEventListener("click", function () {
+      window.open(urlWhatsapp("¡Hola Elquiz-st! " + textoPuntaje().replace(" ¿Me ganas?", "") + " Quiero saludar a: "), "_blank", "noopener");
+    });
+    // Teclas A, B, C, D o 1-4 para responder
+    document.addEventListener("keydown", function (e) {
+      if (juego.hidden || respondida || e.ctrlKey || e.metaKey || e.altKey || !lector.hidden) return;
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test((e.target || {}).tagName || "")) return;
+      var k = "abcd".indexOf(e.key.toLowerCase()); if (k < 0) k = "1234".indexOf(e.key);
+      var b = $$(".opcion", cajaOpc)[k]; if (b) { e.preventDefault(); b.click(); }
+    });
+    // Si sale de la pestaña, la pregunta no se pierde: el tiempo se pausa
+    var pausa = 0;
+    document.addEventListener("visibilitychange", function () {
+      if (juego.hidden || respondida) return;
+      if (document.hidden) { pausa = fin - Date.now(); clearInterval(reloj); }
+      else if (pausa) { fin = Date.now() + pausa; pausa = 0; clearInterval(reloj); reloj = setInterval(tic, 100); }
+    });
+  })();
 
   window.addEventListener("hashchange", abrirDesdeEnlace);
   pintarNoticias();
