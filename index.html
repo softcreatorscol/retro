@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Elquizst.com — Radio en vivo</title>
-<meta name="description" content="Elquizst.com — escucha la emisora en vivo, mira la programación y pide tu canción.">
+<title>www.elquiz-st.com — Radio en vivo</title>
+<meta name="description" content="www.elquiz-st.com — escucha la emisora en vivo, mira la programación y pide tu canción.">
 <meta name="theme-color" content="#050824">
-<meta property="og:title" content="Elquizst.com — Radio en vivo">
+<meta property="og:title" content="www.elquiz-st.com — Radio en vivo">
 <meta property="og:description" content="La señal que no se apaga. Escucha en vivo y pide tu canción.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050824'/%3E%3Cpath d='M14 24h36a4 4 0 0 1 4 4v20a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V28a4 4 0 0 1 4-4z' fill='none' stroke='%232F7BFF' stroke-width='3'/%3E%3Cpath d='M20 24l24-12' stroke='%2345E0FF' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='38' r='6' fill='none' stroke='%2345E0FF' stroke-width='3'/%3E%3Cpath d='M38 34h8M38 42h8' stroke='%2345E0FF' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
@@ -67,7 +67,16 @@ button{cursor:pointer}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-family:var(--titulos);font-size:20px;letter-spacing:1px;white-space:nowrap}
 .logo span{color:var(--cian)}
 .logo svg{width:34px;height:34px;flex:none}
-.menu{display:flex;align-items:center;gap:28px}
+.logo-texto{font-weight:400;letter-spacing:.5px}
+.logo-texto i{font-style:normal;color:#8FB4FF}
+.logo-pie{font-size:24px}
+.menu{display:flex;align-items:center;gap:26px}
+.menu a{white-space:nowrap}
+html{scroll-padding-top:calc(76px + env(safe-area-inset-top))}
+.portada h1.cromado{white-space:nowrap;font-size:clamp(38px,7.6vw,100px)}
+@media (max-width:600px){.portada h1.cromado{font-size:calc((100vw - 40px) / 6.6)}}
+@media (min-width:861px) and (max-width:1300px){.menu{gap:16px}.menu a{font-size:12.5px;letter-spacing:1px}.logo{font-size:17px}.logo svg{width:30px;height:30px}}
+@media (min-width:861px) and (max-width:1020px){.encabezado .pildora-vivo{display:none}}
 .menu a{color:var(--hielo);text-decoration:none;font-weight:600;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;padding:10px 0;position:relative}
 .menu a::after{content:"";position:absolute;left:0;right:0;bottom:4px;height:2px;background:var(--cian);transform:scaleX(0);transform-origin:left;transition:transform .25s}
 .menu a:hover::after{transform:scaleX(1)}
@@ -312,6 +321,40 @@ button{cursor:pointer}
 .mas-notas[hidden],.filtros[hidden]{display:none}
 .sin-notas{color:var(--texto-tenue)}
 
+/* ---------- Noticias ---------- */
+.noticias{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px;align-items:start}
+.noticias.solo-una{grid-template-columns:minmax(0,1fr)}
+.noticia{position:relative;display:flex;flex-direction:column;border-radius:10px;border:1px solid var(--linea);background:var(--panel);overflow:hidden;cursor:pointer;color:inherit;transition:transform .25s,box-shadow .25s,border-color .25s}
+.noticia.destacada{border:2px solid var(--azul);box-shadow:6px 6px 0 var(--cian)}
+.noticia .portada-nota{aspect-ratio:16/8}
+.noticia h3{margin:0;font-family:var(--titulos);font-weight:400;font-size:clamp(21px,2.4vw,26px);line-height:1.25;color:#fff}
+.titulares{display:flex;flex-direction:column;gap:14px}
+.titular{display:grid;grid-template-columns:76px minmax(0,1fr);gap:16px;align-items:start;padding:16px 18px;border-radius:10px;border:1px solid var(--linea);background:var(--panel);cursor:pointer;transition:transform .25s,border-color .25s,box-shadow .25s}
+.titular h3{margin:2px 0 4px;font-family:var(--titulos);font-weight:400;font-size:17px;line-height:1.3;color:#fff}
+.titular .nota-resumen{font-size:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.titular .leer{padding-top:6px}
+.calendario{display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:6px;border:1px solid var(--cian);background:var(--noche-2);padding:6px 0 4px;line-height:1}
+.calendario b{font-family:var(--display);font-weight:400;font-size:34px;color:#fff}
+.calendario span{font-family:var(--lcd);font-size:19px;letter-spacing:1px;color:var(--cian);text-transform:uppercase}
+.nuevo{display:inline-block;margin-right:8px;padding:1px 8px;border-radius:3px;background:var(--rojo);color:#fff;font-family:var(--lcd);font-size:17px;letter-spacing:1px;vertical-align:1px}
+.portada-noticia .anio-grande{font-size:clamp(40px,5.4vw,60px);white-space:nowrap}
+.portada-noticia .anio-grande small{font-size:.55em;margin-left:.15em}
+.lector .portada-noticia .anio-grande{font-size:clamp(48px,9vw,84px)}
+.fuente{font-size:15px}
+.fuente a{color:#7FD8FF}
+@media (hover:hover){
+  .noticia:hover,.titular:hover{transform:translateY(-3px);border-color:var(--azul);box-shadow:0 12px 32px rgba(47,123,255,.28)}
+  .noticia.destacada:hover{box-shadow:6px 6px 0 var(--cian),0 12px 32px rgba(47,123,255,.28)}
+  .titular:hover .leer,.noticia:hover .leer{color:#fff}
+}
+@media (max-width:860px){
+  .noticias{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:480px){
+  .titular{grid-template-columns:62px minmax(0,1fr);gap:12px;padding:14px}
+  .calendario b{font-size:28px}
+}
+
 /* Lector de la historia */
 .lector{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom))}
 .lector[hidden]{display:none}
@@ -349,7 +392,8 @@ body.leyendo{overflow:hidden}
   .reproductor{max-width:none}
 }
 @media (max-width:480px){
-  .logo{font-size:17px}
+  .logo{font-size:16px;gap:8px}
+  .logo-pie{font-size:20px}
   .logo svg{width:30px;height:30px}
   .boton{width:100%}
   .caja{padding:22px}
@@ -358,6 +402,7 @@ body.leyendo{overflow:hidden}
   .seccion{padding:64px 0 48px}
   .programa .hora{font-size:26px}
 }
+@media (max-width:340px){.logo{font-size:14px}.logo svg{width:26px;height:26px}}
 
 /* Respeta a quienes prefieren menos movimiento */
 @media (prefers-reduced-motion:reduce){
@@ -371,13 +416,14 @@ body.leyendo{overflow:hidden}
 
 <header class="encabezado" id="encabezado">
   <div class="contenedor">
-    <a class="logo" href="#inicio" aria-label="Elquizst.com, inicio">
+    <a class="logo" href="#inicio" aria-label="www.elquiz-st.com, inicio">
       <svg viewBox="0 0 24 24" fill="none" stroke="#2F7BFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8l10-5" stroke="#45E0FF"/><circle cx="9" cy="14" r="3" stroke="#45E0FF"/><path d="M15 12h3M15 15h3" stroke="#45E0FF"/></svg>
-      ELQUIZST<span>.COM</span>
+      <b class="logo-texto"><i>www.</i>elquiz-st<span>.com</span></b>
     </a>
     <nav class="menu" id="menu" aria-label="Principal">
       <a href="#en-vivo">En vivo</a>
       <a href="#programacion">Programación</a>
+      <a href="#noticias">Noticias</a>
       <a href="#rebobinando">Rebobinando</a>
       <a href="#pedidos">Pide tu canción</a>
       <a href="#contacto">Contacto</a>
@@ -401,7 +447,7 @@ body.leyendo{overflow:hidden}
     <div class="contenedor" id="en-vivo">
       <div class="portada-texto">
         <p class="etiqueta-lcd entrada"><span class="cursor">▶ TRANSMITIENDO 24/7 DESDE [CIUDAD]</span></p>
-        <h1 class="cromado entrada entrada-2">Elquizst</h1>
+        <h1 class="cromado entrada entrada-2">Elquiz-st</h1>
         <p class="lema entrada entrada-3">La señal que no se apaga.</p>
         <p class="intro entrada entrada-4">[Una o dos frases sobre la emisora: qué música pone, a quién le habla y qué la hace distinta.]</p>
         <div class="acciones entrada entrada-5">
@@ -444,10 +490,10 @@ body.leyendo{overflow:hidden}
   <!-- CINTA -->
   <div class="cinta" aria-hidden="true">
     <div class="cinta-pista">
-      <span>EN VIVO ★ ELQUIZST.COM ★ LA SEÑAL QUE NO SE APAGA ★ PIDE TU CANCIÓN ★ [FRECUENCIA] FM ★</span>
-      <span>EN VIVO ★ ELQUIZST.COM ★ LA SEÑAL QUE NO SE APAGA ★ PIDE TU CANCIÓN ★ [FRECUENCIA] FM ★</span>
-      <span>EN VIVO ★ ELQUIZST.COM ★ LA SEÑAL QUE NO SE APAGA ★ PIDE TU CANCIÓN ★ [FRECUENCIA] FM ★</span>
-      <span>EN VIVO ★ ELQUIZST.COM ★ LA SEÑAL QUE NO SE APAGA ★ PIDE TU CANCIÓN ★ [FRECUENCIA] FM ★</span>
+      <span>EN VIVO ★ WWW.ELQUIZ-ST.COM ★ LA SEÑAL QUE NO SE APAGA ★ PIDE TU CANCIÓN ★ [FRECUENCIA] FM ★</span>
+      <span>EN VIVO ★ WWW.ELQUIZ-ST.COM ★ LA SEÑAL QUE NO SE APAGA ★ PIDE TU CANCIÓN ★ [FRECUENCIA] FM ★</span>
+      <span>EN VIVO ★ WWW.ELQUIZ-ST.COM ★ LA SEÑAL QUE NO SE APAGA ★ PIDE TU CANCIÓN ★ [FRECUENCIA] FM ★</span>
+      <span>EN VIVO ★ WWW.ELQUIZ-ST.COM ★ LA SEÑAL QUE NO SE APAGA ★ PIDE TU CANCIÓN ★ [FRECUENCIA] FM ★</span>
     </div>
   </div>
 
@@ -467,6 +513,21 @@ body.leyendo{overflow:hidden}
     </div>
   </section>
 
+
+  <!-- NOTICIAS: novedades de la emisora (se llena sola con la lista NOTICIAS del final del archivo) -->
+  <section class="seccion" id="noticias" style="padding-top:0">
+    <div class="contenedor">
+      <div class="cabecera-seccion aparece">
+        <div>
+          <p class="etiqueta-lcd">// ▶ ÚLTIMA HORA</p>
+          <h2>Noticias</h2>
+        </div>
+        <span class="nota-meta">Novedades, estrenos y anuncios de la emisora</span>
+      </div>
+      <div class="noticias" id="lista-noticias"></div>
+      <div class="mas-notas" id="mas-noticias" hidden><button class="boton boton-borde" type="button" id="boton-mas-noticias">Ver más noticias</button></div>
+    </div>
+  </section>
 
   <!-- REBOBINANDO: historias de la música (se llena sola con la lista HISTORIAS del final del archivo) -->
   <section class="seccion" id="rebobinando" style="padding-top:0">
@@ -521,12 +582,12 @@ body.leyendo{overflow:hidden}
 <footer class="pie" id="contacto">
   <div class="contenedor">
     <div class="pie-col">
-      <span class="logo" style="font-size:24px">ELQUIZST<span>.COM</span></span>
+      <span class="logo logo-pie"><b class="logo-texto"><i>www.</i>elquiz-st<span>.com</span></b></span>
       <span>La señal que no se apaga.</span>
     </div>
     <div class="pie-col">
       <span class="titulo">CONTACTO</span>
-      <a href="mailto:[correo@elquizst.com]">[correo@elquizst.com]</a>
+      <a href="mailto:[correo@elquiz-st.com]">[correo@elquiz-st.com]</a>
       <a href="#" id="enlace-whatsapp">WhatsApp</a>
     </div>
     <div class="pie-col">
@@ -536,7 +597,7 @@ body.leyendo{overflow:hidden}
       <a href="#" target="_blank" rel="noopener">TikTok</a>
     </div>
   </div>
-  <div class="derechos"><div class="contenedor"><p>© <span id="anio">2026</span> ELQUIZST.COM · TODOS LOS DERECHOS RESERVADOS</p></div></div>
+  <div class="derechos"><div class="contenedor"><p>© <span id="anio">2026</span> WWW.ELQUIZ-ST.COM · TODOS LOS DERECHOS RESERVADOS</p></div></div>
 </footer>
 
 <!-- Mini reproductor que aparece al bajar -->
@@ -546,7 +607,7 @@ body.leyendo{overflow:hidden}
       <span class="si-pausa"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg></span>
       <span class="si-suena"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></span>
     </button>
-    <div class="texto"><strong>Elquizst.com · En vivo</strong><span id="mini-programa">[Programa actual]</span></div>
+    <div class="texto"><strong>elquiz-st.com · En vivo</strong><span id="mini-programa">[Programa actual]</span></div>
     <div class="mini-eq" aria-hidden="true"><i></i><i style="animation-delay:-.3s"></i><i style="animation-delay:-.6s"></i><i style="animation-delay:-.15s"></i></div>
   </div>
 </div>
@@ -556,7 +617,7 @@ body.leyendo{overflow:hidden}
 <div class="lector" id="lector" hidden role="dialog" aria-modal="true" aria-labelledby="lector-titulo">
   <div class="lector-fondo" data-cerrar></div>
   <article class="lector-caja" id="lector-caja" tabindex="-1">
-    <button class="lector-cerrar" type="button" data-cerrar aria-label="Cerrar historia">✕</button>
+    <button class="lector-cerrar" type="button" data-cerrar aria-label="Cerrar">✕</button>
     <div class="portada-nota" id="lector-portada"></div>
     <div class="lector-cuerpo">
       <p class="nota-meta" id="lector-meta"></p>
@@ -593,6 +654,54 @@ var CONFIG = {
   ],
   // Lo que se muestra cuando ningún programa está al aire
   SIN_PROGRAMA: "Música continua",
+
+  // ▶ NOTICIAS — novedades de la emisora.
+  // Para agregar una, copia un bloque { ... }, pégalo ARRIBA de todo y cambia los datos.
+  // Se ordenan solas: la más reciente sale grande y las demás al lado como titulares.
+  //  fecha:     "AAAA-MM-DD" de la noticia. Las de los últimos 3 días llevan la marca "NUEVO".
+  //  categoria: la que quieras (La emisora, Estrenos, Eventos, Música...).
+  //  imagen:    opcional. Foto TUYA o con permiso (ej: "img/estudio.jpg").
+  //  texto:     cada línea entre comillas es un párrafo. Usa *así* para resaltar en azul.
+  //  fuente:    opcional. Si la noticia viene de otro medio, pega aquí el enlace original.
+  // ⚠️ Las cuatro de abajo son de EJEMPLO: cámbialas o bórralas antes de publicar.
+  NOTICIAS: [
+    {
+      fecha: "2026-11-17", categoria: "La emisora", imagen: "", fuente: "",
+      titulo: "[EJEMPLO] Estrenamos nueva programación de fin de semana",
+      resumen: "Desde este sábado llegan nuevos programas especiales para acompañarte todo el fin de semana.",
+      texto: [
+        "A partir de este sábado, *Elquiz-st* estrena su nueva programación de fin de semana.",
+        "Habrá especiales por décadas, horas dedicadas a un solo artista y más espacio para tus pedidos. Revisa los horarios en la sección *Programación*."
+      ]
+    },
+    {
+      fecha: "2026-11-12", categoria: "Estrenos", imagen: "", fuente: "",
+      titulo: "[EJEMPLO] Llega el especial navideño de los 80",
+      resumen: "Todo diciembre, los clásicos navideños que sonaban en la radio de los ochenta.",
+      texto: [
+        "Durante todo diciembre tendremos un especial con los clásicos navideños que sonaban en la radio de los años ochenta.",
+        "¿Tienes una canción navideña que te recuerde a tu infancia? Pídela en la sección *Pide tu canción*."
+      ]
+    },
+    {
+      fecha: "2026-11-05", categoria: "La emisora", imagen: "", fuente: "",
+      titulo: "[EJEMPLO] Ya puedes escucharnos desde cualquier celular",
+      resumen: "Dale play desde la página y sigue escuchando aunque bloquees la pantalla.",
+      texto: [
+        "Ahora puedes escuchar la emisora desde cualquier celular, sin instalar nada: entra a la página y dale *play*.",
+        "En la mayoría de celulares la música sigue sonando aunque bloquees la pantalla."
+      ]
+    },
+    {
+      fecha: "2026-10-28", categoria: "Eventos", imagen: "", fuente: "",
+      titulo: "[EJEMPLO] Gracias por acompañarnos en el especial de Halloween",
+      resumen: "Una noche de rock, sintetizadores y muchas dedicatorias.",
+      texto: [
+        "Gracias a todos los que nos acompañaron en el especial de Halloween y nos mandaron sus pedidos.",
+        "Pronto anunciaremos el próximo especial. Síguenos en redes para enterarte primero."
+      ]
+    }
+  ],
 
   // ◀◀ REBOBINANDO — historias de la música.
   // Para agregar una, copia un bloque { ... }, pégalo ARRIBA de todo y cambia los datos.
@@ -646,7 +755,7 @@ var CONFIG = {
       resumen: "El primer video que pasó el canal fue toda una declaración de intenciones.",
       texto: [
         "El 1 de agosto de 1981 salió al aire MTV, el primer canal dedicado las 24 horas a los videos musicales.",
-        "El primer video que transmitió fue *Video Killed the Radio Star* de The Buggles. Aquí en Elquizst seguimos pensando que la radio sigue más viva que nunca."
+        "El primer video que transmitió fue *Video Killed the Radio Star* de The Buggles. Aquí en Elquiz-st seguimos pensando que la radio sigue más viva que nunca."
       ]
     },
     {
@@ -768,7 +877,7 @@ var CONFIG = {
 
   // Controles en la pantalla de bloqueo del celular
   if ("mediaSession" in navigator && window.MediaMetadata) {
-    navigator.mediaSession.metadata = new MediaMetadata({ title: "En vivo", artist: "Elquizst.com", album: "La señal que no se apaga" });
+    navigator.mediaSession.metadata = new MediaMetadata({ title: "En vivo", artist: "www.elquiz-st.com", album: "La señal que no se apaga" });
     try {
       navigator.mediaSession.setActionHandler("play", reproducir);
       navigator.mediaSession.setActionHandler("pause", detener);
@@ -845,7 +954,7 @@ var CONFIG = {
     if (!nombre) { avisar("Escribe tu nombre."); $("#nombre").focus(); return; }
     if (!cancion) { avisar("Escribe la canción que quieres escuchar."); $("#cancion").focus(); return; }
     if (!CONFIG.WHATSAPP) { avisar("Falta poner el número de WhatsApp (WHATSAPP) en el archivo."); return; }
-    var texto = "¡Hola Elquizst! Soy " + nombre + ".\nQuiero escuchar: " + cancion + (dedic ? "\nSe la dedico a: " + dedic : "");
+    var texto = "¡Hola Elquiz-st! Soy " + nombre + ".\nQuiero escuchar: " + cancion + (dedic ? "\nSe la dedico a: " + dedic : "");
     window.open(urlWhatsapp(texto), "_blank", "noopener");
     e.target.reset();
     avisar("¡Listo! Envía el mensaje en WhatsApp y suena pronto.");
@@ -916,44 +1025,125 @@ var CONFIG = {
   }
   $("#boton-mas").addEventListener("click", function () { mostradas += POR_PAGINA; pintarNotas(); });
 
-  var lector = $("#lector"), lectorCaja = $("#lector-caja"), abiertaDesde = null, actualHistoria = null;
+  var lector = $("#lector"), lectorCaja = $("#lector-caja"), abiertaDesde = null, compartirDatos = null, volverA = "#rebobinando";
+  function mostrarLector(origen, hash, volver, compartir) {
+    abiertaDesde = origen || null; volverA = volver; compartirDatos = compartir;
+    lector.hidden = false;
+    document.body.classList.add("leyendo");
+    lectorCaja.scrollTop = 0;
+    lectorCaja.focus({ preventScroll: true });
+    if (location.hash !== hash) history.replaceState(null, "", hash);
+  }
   function abrirHistoria(h, origen) {
     var info = infoFecha(h);
-    actualHistoria = h; abiertaDesde = origen || null;
     ponerPortada($("#lector-portada"), h, info);
     $("#lector-meta").innerHTML = "<b>" + escapar(h.datos.categoria || "Historia") + "</b> · " + escapar(info.larga);
     $("#lector-titulo").textContent = h.datos.titulo || "";
     var parrafos = [].concat(h.datos.texto || h.datos.resumen || []);
     $("#lector-texto").innerHTML = parrafos.map(function (t) { return "<p>" + textoRico(t) + "</p>"; }).join("");
-    lector.hidden = false;
-    document.body.classList.add("leyendo");
-    lectorCaja.scrollTop = 0;
-    lectorCaja.focus({ preventScroll: true });
-    if (location.hash !== "#historia/" + h.slug) history.replaceState(null, "", "#historia/" + h.slug);
+    mostrarLector(origen, "#historia/" + h.slug, "#rebobinando",
+      { titulo: (h.datos.titulo || "") + " — " + info.etiqueta.toLowerCase(), hash: "#historia/" + h.slug });
   }
   function cerrarHistoria() {
     if (lector.hidden) return;
     lector.hidden = true;
     document.body.classList.remove("leyendo");
-    history.replaceState(null, "", location.pathname + location.search + "#rebobinando");
+    history.replaceState(null, "", location.pathname + location.search + volverA);
     if (abiertaDesde) abiertaDesde.focus({ preventScroll: true });
   }
   $$("[data-cerrar]", lector).forEach(function (el) { el.addEventListener("click", cerrarHistoria); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") cerrarHistoria(); });
   $("#lector-compartir").addEventListener("click", function () {
-    if (!actualHistoria) return;
-    var url = location.href.split("#")[0] + "#historia/" + actualHistoria.slug;
-    var titulo = (actualHistoria.datos.titulo || "") + " — " + infoFecha(actualHistoria).etiqueta.toLowerCase();
+    if (!compartirDatos) return;
+    var url = location.href.split("#")[0] + compartirDatos.hash;
+    var titulo = compartirDatos.titulo;
     if (navigator.share) { navigator.share({ title: titulo, url: url }).catch(function () {}); return; }
     window.open("https://wa.me/?text=" + encodeURIComponent(titulo + "\n" + url), "_blank", "noopener");
   });
   function abrirDesdeEnlace() {
-    var m = location.hash.match(/^#historia\/(.+)$/);
+    var m = location.hash.match(/^#(historia|noticia)\/(.+)$/);
     if (!m) return;
-    var h = historias.filter(function (x) { return x.slug === decodeURIComponent(m[1]); })[0];
-    if (h) abrirHistoria(h);
+    var lista = m[1] === "noticia" ? noticias : historias;
+    var x = lista.filter(function (y) { return y.slug === decodeURIComponent(m[2]); })[0];
+    if (x) (m[1] === "noticia" ? abrirNoticia : abrirHistoria)(x);
   }
+
+  /* ---------- Noticias ---------- */
+  var MES_CORTO = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+  var NOTICIAS_POR_PAGINA = 5, noticiasMostradas = NOTICIAS_POR_PAGINA;
+  var noticias = (CONFIG.NOTICIAS || []).map(function (n, i) {
+    var p = String(n.fecha || "").split("-"), y = +p[0] || new Date().getFullYear(), m = (+p[1] || 1) - 1, d = +p[2] || 1;
+    var slug = String(n.titulo || "noticia").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || ("noticia-" + i);
+    var cuando = new Date(y, m, d);
+    var dias = Math.floor((new Date().setHours(0, 0, 0, 0) - cuando.getTime()) / 864e5);
+    return { datos: n, anio: y, mes: m, dia: d, slug: slug, orden: i, tiempo: cuando.getTime(), nueva: dias >= 0 && dias <= 3 };
+  }).sort(function (a, b) { return b.tiempo - a.tiempo || a.orden - b.orden; });
+
+  function fechaNoticia(n) { return n.dia + " de " + MESES[n.mes] + " de " + n.anio; }
+  function metaNoticia(n) {
+    return (n.nueva ? '<span class="nuevo">NUEVO</span>' : "") +
+      "<b>" + escapar(n.datos.categoria || "Noticia") + "</b> · " + escapar(fechaNoticia(n));
+  }
+  function portadaNoticia(el, n) {
+    el.className = "portada-nota portada-noticia" + (n.datos.imagen ? " con-foto" : "");
+    el.style.backgroundImage = n.datos.imagen ? 'url("' + String(n.datos.imagen).replace(/["\\\n]/g, "") + '")' : "";
+    el.innerHTML = '<span class="hace">NOTICIAS</span>' +
+      '<p class="anio-grande" aria-hidden="true">' + n.dia + "<small>" + MES_CORTO[n.mes].toUpperCase() + "</small></p>";
+  }
+  var cajaNoticias = $("#lista-noticias"), cajaMasNoticias = $("#mas-noticias");
+  function pintarNoticias() {
+    cajaNoticias.innerHTML = "";
+    if (!noticias.length) { cajaNoticias.innerHTML = '<p class="sin-notas">Pronto publicaremos novedades.</p>'; cajaMasNoticias.hidden = true; return; }
+    var lista = noticias.slice(0, noticiasMostradas);
+    cajaNoticias.classList.toggle("solo-una", lista.length === 1);
+
+    var d = lista[0], a = document.createElement("article");
+    a.className = "noticia destacada aparece";
+    a.innerHTML = '<div class="portada-nota"></div><div class="nota-cuerpo">' +
+      '<p class="nota-meta">' + metaNoticia(d) + "</p>" +
+      "<h3>" + escapar(d.datos.titulo || "") + "</h3>" +
+      '<p class="nota-resumen">' + escapar(d.datos.resumen || "") + "</p>" +
+      '<button type="button" class="leer">Leer noticia →</button></div>';
+    portadaNoticia($(".portada-nota", a), d);
+    a.addEventListener("click", function () { abrirNoticia(d, $(".leer", a)); });
+    cajaNoticias.appendChild(a);
+
+    if (lista.length > 1) {
+      var col = document.createElement("div");
+      col.className = "titulares";
+      lista.slice(1).forEach(function (n) {
+        var t = document.createElement("article");
+        t.className = "titular aparece";
+        t.innerHTML = '<div class="calendario" aria-hidden="true"><b>' + n.dia + "</b><span>" + MES_CORTO[n.mes] + "</span></div>" +
+          '<div><p class="nota-meta">' + metaNoticia(n) + "</p>" +
+          "<h3>" + escapar(n.datos.titulo || "") + "</h3>" +
+          '<p class="nota-resumen">' + escapar(n.datos.resumen || "") + "</p>" +
+          '<button type="button" class="leer">Leer →</button></div>';
+        t.addEventListener("click", function () { abrirNoticia(n, $(".leer", t)); });
+        col.appendChild(t);
+      });
+      cajaNoticias.appendChild(col);
+    }
+    cajaMasNoticias.hidden = noticias.length <= noticiasMostradas;
+    observar($$(".aparece", cajaNoticias));
+  }
+  $("#boton-mas-noticias").addEventListener("click", function () { noticiasMostradas += NOTICIAS_POR_PAGINA; pintarNoticias(); });
+
+  function abrirNoticia(n, origen) {
+    portadaNoticia($("#lector-portada"), n);
+    $("#lector-meta").innerHTML = metaNoticia(n);
+    $("#lector-titulo").textContent = n.datos.titulo || "";
+    var parrafos = [].concat(n.datos.texto || n.datos.resumen || []);
+    var html = parrafos.map(function (t) { return "<p>" + textoRico(t) + "</p>"; }).join("");
+    var f = String(n.datos.fuente || "");
+    if (/^https?:\/\//i.test(f)) html += '<p class="fuente">Fuente: <a href="' + escapar(f).replace(/"/g, "%22") + '" target="_blank" rel="noopener">' + escapar(f.replace(/^https?:\/\/(www\.)?/i, "").split("/")[0]) + "</a></p>";
+    $("#lector-texto").innerHTML = html;
+    mostrarLector(origen, "#noticia/" + n.slug, "#noticias", { titulo: n.datos.titulo || "", hash: "#noticia/" + n.slug });
+  }
+
   window.addEventListener("hashchange", abrirDesdeEnlace);
+  pintarNoticias();
   pintarFiltros();
   pintarNotas();
   abrirDesdeEnlace();
